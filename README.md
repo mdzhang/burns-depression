@@ -3,7 +3,10 @@
 ## Setup
 
 ```sh
+# frontend
 $ npx create-next-app@latest --ts burns-depression
+# backend
+$ npx prisma init
 ```
 
 ## Resources
