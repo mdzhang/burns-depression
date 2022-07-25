@@ -21,6 +21,7 @@ function ButtonRange({ setValue, value, offset = 0 }: Props) {
       {[0, 1, 2, 3, 4]
         .map((num) => (
           <button
+            key={num}
             style={{ margin: '0 5px' }}
             onClick={() => setValue((num + offset).toString())}
             className={`${defaultClassNames} ${

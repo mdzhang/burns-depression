@@ -15,6 +15,15 @@ function Quiz() {
       .reduce((a, b) => a + b, 0);
 
     setPoints(total);
+
+    const date = new Date(Date.now()).toISOString().slice(0, 10);
+    const result = {
+      date,
+      raw: model,
+      total,
+    };
+
+    window.localStorage.setItem(`result_${date}`, JSON.stringify(result));
   };
 
   return (
@@ -57,7 +66,6 @@ function Quiz() {
             <tr>
               <td
                 className="border px-4 py-2"
-                key="submit"
               >
                 <button
                   type="submit"
@@ -68,7 +76,6 @@ function Quiz() {
               </td>
               <td
                 className="border px-4 py-2"
-                key="total"
               >
                 Total:
                 {' '}
