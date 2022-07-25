@@ -9,9 +9,7 @@ on:
       - main
 
 jobs:
-  jest:
-    # TODO: update branch
   eslint:
-    uses: ./.github/workflows/frontend-reusable.yml@add-linter
+    uses: ./.github/workflows/frontend-reusable.yml
     with:
       cmd: lint
