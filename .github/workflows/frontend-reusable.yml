@@ -1,15 +1,14 @@
-name: frontend-ci
+name: frontend-reusable
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      cmd:
+        required: true
+        type: string
 
 jobs:
-  jest:
+  run:
     runs-on: ubuntu-latest
 
     defaults:
@@ -32,4 +31,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn install
-      - run: yarn test
+      - run: yarn ${{ inputs.cmd }}

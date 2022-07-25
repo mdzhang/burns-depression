@@ -1,0 +1,15 @@
+name: frontend-lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  eslint:
+    uses: ./.github/workflows/frontend-reusable.yml
+    with:
+      cmd: lint

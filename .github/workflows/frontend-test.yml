@@ -1,0 +1,15 @@
+name: frontend-test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  jest:
+    uses: ./.github/workflows/frontend-reusable.yml
+    with:
+      cmd: test
