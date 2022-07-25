@@ -4432,6 +4432,15 @@ form-data@^3.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
+formsy-react@^2.2.7:
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/formsy-react/-/formsy-react-2.2.7.tgz#1666c4a6fc23d78912fe4a5da70219e756fd138f"
+  integrity sha512-Vfx7+GG2YakLlvzaJwMlmBlj1bmVG5Y+22VG65T14ioNsPeJhzrrKsoeV4i2x31bkj0MRSLjJhhxZKgGd2THFQ==
+  dependencies:
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+    prop-types "^15.8.1"
+
 forwarded@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
@@ -5880,6 +5889,11 @@ locate-path@^6.0.0:
   integrity sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==
   dependencies:
     p-locate "^5.0.0"
+
+lodash-es@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
 lodash.debounce@^4.0.8:
   version "4.0.8"

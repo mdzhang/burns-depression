@@ -1,5 +1,9 @@
+import Formsy from 'formsy-react';
+
 import styles from './App.module.css';
 import data from './data/questions.json';
+
+import ButtonRange from './components/desktop/forms/ButtonRange';
 
 function App() {
   return (
@@ -34,6 +38,13 @@ function App() {
                     key={question}
                   >
                     {question}
+                  </td>
+                  <td
+                    className="border px-4 py-2"
+                  >
+                    <Formsy>
+                      <ButtonRange name={question} value="" />
+                    </Formsy>
                   </td>
                 </tr>
               ))}
