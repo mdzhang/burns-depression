@@ -1,23 +1,33 @@
 # Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Development
 
-## Available Scripts
+Install [`node]`(https://nodejs.org/en/) v18+ e.g. using [`anyenv`](https://github.com/anyenv/anyenv) & [`nodenv`](https://github.com/nodenv/nodenv)
 
-In the project directory, you can run:
+```sh
+# ensure you're in the frontend/ directory and have recently `git pull`'d
+$ brew install anyenv
+$ anyenv init
+$ anyenv install --init
+$ anyenv install nodenv
+$ nodenv rehash
+$ nodenv install 18.2.0
+$ nodenv global 18.2.0
+$ npm install -g yarn
+$ yarn install
+```
 
-### `yarn start`
+Install [packages](https://www.npmjs.com/) with `yarn install`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Start the site in development mode with `yarn start`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* The page will reload if you make edits.
+* You will also see any lint errors in the console.
 
-### `yarn test`
+### Testing
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Run [Jest](https://jestjs.io/) tests with `yarn test`
 
 ### `yarn build`
 
