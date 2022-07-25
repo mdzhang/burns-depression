@@ -66,14 +66,7 @@ function Quiz() {
             <tr>
               <td
                 className="border px-4 py-2"
-              >
-                <button
-                  type="submit"
-                  className="flex-shrink-0  text-sm border-4 text-white py-1 px-2 rounded bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700"
-                >
-                  Submit
-                </button>
-              </td>
+              />
               <td
                 className="border px-4 py-2"
               >
@@ -84,6 +77,15 @@ function Quiz() {
             </tr>
           </tbody>
         </table>
+
+        <div className="my-4 grid place-items-center">
+          <button
+            type="submit"
+            className="flex-shrink-0  text-sm border-4 text-white py-1 px-2 rounded bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700"
+          >
+            See my results
+          </button>
+        </div>
       </Formsy>
     </main>
   );
