@@ -2,6 +2,10 @@ name: frontend-reusable
 
 on:
   workflow_call:
+    inputs:
+      cmd:
+        required: true
+        type: string
 
 jobs:
   run_package_script:
