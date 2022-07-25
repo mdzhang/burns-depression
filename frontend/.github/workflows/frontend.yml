@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - switch-to-react
   pull_request:
     branches:
       - main
