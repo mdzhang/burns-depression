@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import styles from './App.css';
+import data from './data/questions.json';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className={styles.container}>
+      <header>
+        <title>Burns Depression Checklist</title>
       </header>
+
+      <main className={styles.main}>
+        <h1 className="text-3xl font-bold underline">
+          Take The Burns Depression Checklist
+        </h1>
+
+        <p className={styles.description}>
+          From{' '}
+          <a href="https://www.amazon.com/Feeling-Good-New-Mood-Therapy-ebook/dp/B009UW5X4C">
+            Feeling Good: The New Mood Therapy, by
+            David D. Burns
+          </a>
+        </p>
+
+        <table className="table-auto rounded-lg">
+          <tbody>
+            {data
+              .map((c) => c.questions)
+              .flat()
+              .map((question, index) => (
+                <tr key={index}>
+                  <td
+                    className="border px-4 py-2"
+                    key={index}
+                  >
+                    {question}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </main>
     </div>
   );
 }
