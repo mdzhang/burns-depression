@@ -14,7 +14,8 @@ function App() {
         </h1>
 
         <p className={styles.description}>
-          From{' '}
+          From
+          {' '}
           <a href="https://www.amazon.com/Feeling-Good-New-Mood-Therapy-ebook/dp/B009UW5X4C">
             Feeling Good: The New Mood Therapy, by
             David D. Burns
@@ -26,11 +27,11 @@ function App() {
             {data
               .map((c) => c.questions)
               .flat()
-              .map((question, index) => (
-                <tr key={index}>
+              .map((question) => (
+                <tr key={question}>
                   <td
                     className="border px-4 py-2"
-                    key={index}
+                    key={question}
                   >
                     {question}
                   </td>
