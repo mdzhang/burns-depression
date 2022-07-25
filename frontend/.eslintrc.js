@@ -36,5 +36,10 @@ module.exports = {
     // OOTB not working w/ react app
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
+    // no-unused vars will misidentify TS types
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+    ],
   },
 };
