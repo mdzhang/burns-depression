@@ -1,17 +1,12 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
+import styles from './App.module.css';
+import data from './data/questions.json';
 
-// TODO: move to frontend
-import * as data from '../../data/questions.json';
-
-const Home: NextPage = () => {
+function App() {
   return (
     <div className={styles.container}>
-      <Head>
+      <header>
         <title>Burns Depression Checklist</title>
-      </Head>
+      </header>
 
       <main className={styles.main}>
         <h1 className="text-3xl font-bold underline">
@@ -46,6 +41,6 @@ const Home: NextPage = () => {
       </main>
     </div>
   );
-};
+}
 
-export default Home;
+export default App;
