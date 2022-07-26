@@ -105,10 +105,11 @@ function Quiz() {
             { points }
           </span>
           .
-          You have
-          {' '}
+          You
+          {levelOfDepression === 'Normal but unhappy' ? ' are ' : ' have '}
           <span className="font-bold">
             { levelOfDepression.toLowerCase() }
+            .
           </span>
         </div>
       )}
