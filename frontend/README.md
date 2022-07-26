@@ -40,3 +40,8 @@ $ yarn build
 $ yarn global add serve
 $ serve -s build
 ```
+
+## Marketing
+
+- [Google Search Console](https://search.google.com/search-console/users?resource_id=sc-domain:amisad.com)
+- [Google Analytics](https://analytics.google.com/analytics/web/?authuser=0#/p324823976/reports/intelligenthome)
