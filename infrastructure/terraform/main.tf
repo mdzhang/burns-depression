@@ -31,4 +31,5 @@ resource "aws_route53_record" "site_a" {
   zone_id = aws_route53_zone.primary.zone_id
   type    = "A"
   records = ["76.76.21.21"]
+  ttl     = 300
 }
