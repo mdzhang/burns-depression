@@ -33,3 +33,11 @@ resource "aws_route53_record" "site_a" {
   records = ["76.76.21.21"]
   ttl     = 300
 }
+
+resource "aws_route53_record" "site_cname" {
+  name    = "www"
+  zone_id = aws_route53_zone.primary.zone_id
+  type    = "CNAME"
+  records = ["cname.vercel-dns.com"]
+  ttl     = "5"
+}

@@ -8,7 +8,7 @@ The Vercel [Github](https://vercel.com/docs/concepts/git/vercel-for-github) inte
 
 The domain is purchased through Amazon's AWS Route53.
 
-[Terraform](https://www.terraform.io/) is used to manage AWS resources, and is automated through [Terraform Cloud](https://cloud.hashicorp.com/products/terraform).
+[Terraform](https://www.terraform.io/) is used to manage AWS resources. [Terraform Cloud](https://cloud.hashicorp.com/products/terraform) is used to manage state but `terraform apply` is expected to be run locally.
 
 ## Setup
 
