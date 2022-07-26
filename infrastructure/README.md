@@ -28,10 +28,9 @@ The domain is purchased through Amazon's AWS Route53.
 * Proceed with planning:
   ```sh
   terraform init
-  terraform plan # triggers run in TF cloud
+  terraform plan
+  terraform apply
   ```
-* Push changes up and create a pull request to have Terraform Cloud automatically trigger a run
-* Applies can only occur through TF cloud when manually triggered after a successful plan on a run triggered by a commit to the `main` branch
 
 ## Tips
 
