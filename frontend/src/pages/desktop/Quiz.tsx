@@ -12,12 +12,15 @@ function Quiz() {
   const [showResults, setShowResults] = useState(false);
   const [points, setPoints] = useState(0);
 
-  const updatePoints = (model: { [key: string]: string; }) => {
+  const updatePoints = (
+    model: { [key: string]: string; },
+    shouldSetShowResults: boolean = false,
+  ) => {
     const total = Object.values(model)
       .map((val) => (val === '' ? 0 : parseInt(val, 10)))
       .reduce((a, b) => a + b, 0);
 
-    setShowResults(true);
+    setShowResults(shouldSetShowResults);
     setPoints(total);
 
     const range = ranges.find((r) => total >= r.min && total <= r.max);
@@ -53,7 +56,10 @@ function Quiz() {
         </a>
       </p>
 
-      <Formsy onValidSubmit={updatePoints} onChange={updatePoints}>
+      <Formsy
+        onValidSubmit={(model) => updatePoints(model, true)}
+        onChange={(model) => updatePoints(model, false)}
+      >
         <table className="table-auto rounded-lg">
           <tbody>
             {data.map((entry) => (
