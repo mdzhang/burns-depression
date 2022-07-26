@@ -53,7 +53,7 @@ function Quiz() {
         </a>
       </p>
 
-      <Formsy onValidSubmit={updatePoints}>
+      <Formsy onValidSubmit={updatePoints} onChange={updatePoints}>
         <table className="table-auto rounded-lg">
           <tbody>
             {data.map((entry) => (
@@ -77,7 +77,7 @@ function Quiz() {
                     <td
                       className="border px-4 py-2"
                     >
-                      <ButtonRange name={question} value="" />
+                      <ButtonRange name={question} value="0" />
                     </td>
                   </tr>
                 ))}
