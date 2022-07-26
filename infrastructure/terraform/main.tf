@@ -26,6 +26,7 @@ resource "aws_route53_zone" "primary" {
   name = var.domain
 }
 
+// DNS records for Vercel
 resource "aws_route53_record" "site_a" {
   name    = var.domain
   zone_id = aws_route53_zone.primary.zone_id
@@ -40,4 +41,14 @@ resource "aws_route53_record" "site_cname" {
   type    = "CNAME"
   records = ["cname.vercel-dns.com"]
   ttl     = "5"
+}
+
+// DNS records for Google Search Console
+// registered under zhang.michelle.d@gmail.com
+resource "aws_route53_record" "site_txt_google" {
+  name    = var.domain
+  zone_id = aws_route53_zone.primary.zone_id
+  type    = "TXT"
+  records = ["google-site-verification=xX7miFcErsINdqDnjMkOcQRdQJR5AZQs1qwsjTnHx48"]
+  ttl     = 300
 }
