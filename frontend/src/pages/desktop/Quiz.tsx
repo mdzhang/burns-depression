@@ -10,6 +10,7 @@ import styles from './Quiz.module.css';
 function Quiz() {
   const [levelOfDepression, setLevelOfDepression] = useState('');
   const [showResults, setShowResults] = useState(false);
+  const [points, setPoints] = useState(0);
 
   const updatePoints = (model: { [key: string]: string; }) => {
     const total = Object.values(model)
@@ -17,6 +18,7 @@ function Quiz() {
       .reduce((a, b) => a + b, 0);
 
     setShowResults(true);
+    setPoints(total);
 
     const range = ranges.find((r) => total >= r.min && total <= r.max);
     if (range) {
@@ -97,6 +99,12 @@ function Quiz() {
 
       {showResults && (
         <div className="text-xl">
+          You scored
+          {' '}
+          <span className="font-bold">
+            { points }
+          </span>
+          .
           You have
           {' '}
           <span className="font-bold">
