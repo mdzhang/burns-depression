@@ -45,13 +45,13 @@ function Quiz() {
   return (
     <main className={styles.main}>
       <h1 className="text-3xl font-bold">
-        Take The Burns Depression Checklist
+        Take The Burns Depression Quiz
       </h1>
 
       <p>
         From
         {' '}
-        <a href="https://www.amazon.com/Feeling-Good-New-Mood-Therapy-ebook/dp/B009UW5X4C">
+        <a href="https://feelinggood.com/">
           Feeling Good: The New Mood Therapy, by
           David D. Burns
         </a>

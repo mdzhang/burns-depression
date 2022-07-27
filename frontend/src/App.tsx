@@ -2,15 +2,11 @@ import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router';
 import { BrowserRouter, Navigate } from 'react-router-dom';
 
-import styles from './App.module.css';
 import Quiz from './pages/desktop/Quiz';
 import Auth from './components/Auth';
+import Topbar from './components/Topbar';
 import { supabase } from './lib/api';
-
-type User = {
-  id: string
-  email?: string
-}
+import { User } from './lib/types';
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -33,19 +29,16 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className={styles.container}>
-        <header>
-          <title>Burns Depression Checklist</title>
-        </header>
-        <Routes>
-          <Route path="take-quiz" element={<Quiz />} />
-          <Route path="login" element={<Auth />} />
-          <Route
-            path="*"
-            element={<Navigate to="/take-quiz" replace />}
-          />
-        </Routes>
-      </div>
+      <Topbar user={user} />
+
+      <Routes>
+        <Route path="take-quiz" element={<Quiz />} />
+        <Route path="login" element={<Auth />} />
+        <Route
+          path="*"
+          element={<Navigate to="/take-quiz" replace />}
+        />
+      </Routes>
     </BrowserRouter>
   );
 }
