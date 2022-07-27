@@ -17,8 +17,6 @@ $ npm install -g yarn
 $ yarn install
 ```
 
-Setup environment variables: `cp .env.example .env`
-
 Install [packages](https://www.npmjs.com/) with `yarn install`
 
 Start the site in development mode with `yarn start`
