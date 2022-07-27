@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "@supabase/supabase-js": "^1.35.4",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
     "autoprefixer": "^10.4.7",
     "dotenv": "^16.0.1",
     "formsy-react": "^2.2.7",
@@ -45,9 +48,6 @@
   },
   "devDependencies": {
     "typescript": "^4.7.4",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/luxon": "^3.0.0",
     "@types/node": "^16.11.45",
