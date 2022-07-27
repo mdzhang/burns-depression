@@ -2,36 +2,41 @@ import { useState } from 'react';
 import Formsy from 'formsy-react';
 
 import ButtonRange from '../../components/desktop/forms/ButtonRange';
-import data from '../../data/questions.json';
-import ranges from '../../data/ranges.json';
+import questions from '../../data/questions.json';
 
 import styles from './Quiz.module.css';
 import { isMobileBrowser } from '../../utils/device';
+import { supabase } from '../../lib/api';
+import { User } from '../../lib/types';
+import { getScore, getLevelOfDepression } from '../../utils/scoring';
 
-function Quiz() {
+interface Props {
+  user: User | null;
+}
+
+function Quiz({ user }: Props) {
   const [levelOfDepression, setLevelOfDepression] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [points, setPoints] = useState(0);
 
-  const updatePoints = (
+  const updatePoints = async (
     model: { [key: string]: string; },
     shouldSetShowResults: boolean = false,
   ) => {
-    const total = Object.values(model)
-      .map((val) => (val === '' ? 0 : parseInt(val, 10)))
-      .reduce((a, b) => a + b, 0);
+    const total = getScore(model);
 
     setShowResults(shouldSetShowResults);
     setPoints(total);
 
-    const range = ranges.find((r) => total >= r.min && total <= r.max);
-    if (range) {
-      setLevelOfDepression(range.result);
+    const level = getLevelOfDepression(total);
+    if (level) {
+      setLevelOfDepression(level);
     } else {
       // eslint-disable-next-line no-console
       console.warn(`Could not find matching range for total: ${total}`);
     }
 
+    // store locally
     const date = new Date(Date.now()).toISOString().slice(0, 10);
     const result = {
       date,
@@ -40,6 +45,26 @@ function Quiz() {
     };
 
     window.localStorage.setItem(`result_${date}`, JSON.stringify(result));
+
+    // store remotely if logged in
+    if (user) {
+      const { data, error } = await supabase
+        .from('quiz_results')
+        .insert([
+          {
+            user_id: user.id,
+            result: JSON.stringify(model),
+          },
+        ]);
+
+      if (error) {
+        // eslint-disable-next-line no-console
+        console.warn('Error saving results', error);
+      } else {
+        // eslint-disable-next-line no-console
+        console.info('Saved results', data);
+      }
+    }
   };
 
   return (
@@ -63,7 +88,7 @@ function Quiz() {
       >
         <table className="table-auto rounded-lg">
           <tbody>
-            {data.map((entry) => (
+            {questions.map((entry) => (
               <>
                 <tr>
                   <td className="px-4 py-2 pt-8">

@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router';
 import { BrowserRouter, Navigate } from 'react-router-dom';
 
 import Quiz from './pages/desktop/Quiz';
+import History from './pages/desktop/History';
 import Auth from './components/Auth';
 import Topbar from './components/Topbar';
 import { supabase } from './lib/api';
@@ -32,7 +33,11 @@ function App() {
       <Topbar user={user} />
 
       <Routes>
-        <Route path="take-quiz" element={<Quiz />} />
+        <Route path="take-quiz" element={<Quiz user={user} />} />
+        <Route
+          path="history"
+          element={<History user={user} />}
+        />
         <Route path="login" element={<Auth />} />
         <Route
           path="*"
