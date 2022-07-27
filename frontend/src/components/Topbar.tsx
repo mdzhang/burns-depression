@@ -1,11 +1,19 @@
 import { User } from '../lib/types';
+import { supabase } from '../lib/api';
 
 interface Props {
   user: User | null;
 }
 
 function Topbar({ user }: Props) {
-  console.log(user);
+  const onLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.warn(`Error logging out: ${error}`);
+    }
+  };
+
   return (
     <header className="bg-white">
       <div
@@ -29,14 +37,36 @@ function Topbar({ user }: Props) {
           </nav>
 
           <div className="flex items-center gap-4">
-            <div className="sm:gap-4 sm:flex">
-              <a
-                className="hidden sm:block px-5 py-2.5 text-sm font-medium text-teal-600 bg-gray-100 rounded-md hover:text-teal-600/75 transition"
-                href="/login"
-              >
-                {user ? `Hi ${user.user_metadata?.full_name}` : 'Login'}
-              </a>
-            </div>
+            {!user && (
+              <div className="sm:gap-4 sm:flex">
+                <a
+                  className="hidden sm:block px-5 py-2.5 text-sm font-medium text-teal-600 bg-gray-100 rounded-md hover:text-teal-600/75 transition"
+                  href="/login"
+                >
+                  Login
+                </a>
+              </div>
+            )}
+            {user && (
+              <>
+                <div className="sm:gap-4 sm:flex">
+                  <span className="text-gray-500 text-sm">
+                    Hi,
+                    {' '}
+                    {user.user_metadata?.full_name}
+                  </span>
+                </div>
+                <div className="sm:gap-4 sm:flex">
+                  <a
+                    className="hidden sm:block px-5 py-2.5 text-sm font-medium text-teal-600 bg-gray-100 rounded-md hover:text-teal-600/75 transition"
+                    href="/take-quiz"
+                    onClick={onLogout}
+                  >
+                    Logout
+                  </a>
+                </div>
+              </>
+            )}
 
             <button
               type="button"
