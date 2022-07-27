@@ -25,12 +25,15 @@ function Topbar({ user }: Props) {
 
         <div className="flex items-center justify-end flex-1 md:justify-between">
           <nav className="hidden md:block" aria-labelledby="header-navigation">
-            <h2 className="sr-only" id="header-navigation">Header navigation</h2>
-
             <ul className="flex items-center gap-6 text-sm">
               <li>
                 <a className="text-gray-500 transition hover:text-gray-500/75" href="/take-quiz">
                   Take Quiz
+                </a>
+              </li>
+              <li>
+                <a className="text-gray-500 transition hover:text-gray-500/75" href="/history">
+                  History
                 </a>
               </li>
             </ul>
