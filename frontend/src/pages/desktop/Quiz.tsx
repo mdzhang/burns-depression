@@ -6,6 +6,7 @@ import data from '../../data/questions.json';
 import ranges from '../../data/ranges.json';
 
 import styles from './Quiz.module.css';
+import { isMobileBrowser } from '../../utils/device';
 
 function Quiz() {
   const [levelOfDepression, setLevelOfDepression] = useState('');
@@ -76,15 +77,24 @@ function Quiz() {
                   <tr key={question}>
                     <td
                       className="border px-4 py-2"
-                      key={question}
                     >
                       {question}
+
+                      {isMobileBrowser() && (
+                        <div
+                          className="py-2"
+                        >
+                          <ButtonRange name={question} value="0" />
+                        </div>
+                      )}
                     </td>
-                    <td
-                      className="border px-4 py-2"
-                    >
-                      <ButtonRange name={question} value="0" />
-                    </td>
+                    {!isMobileBrowser() && (
+                      <td
+                        className="border px-4 py-2"
+                      >
+                        <ButtonRange name={question} value="0" />
+                      </td>
+                    )}
                   </tr>
                 ))}
               </>
@@ -104,7 +114,7 @@ function Quiz() {
       </Formsy>
 
       {showResults && (
-        <div className="text-xl">
+        <div className="text-xl" style={{ textAlign: 'center' }}>
           You scored
           {' '}
           <span className="font-bold">
