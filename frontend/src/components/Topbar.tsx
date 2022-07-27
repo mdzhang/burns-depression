@@ -1,9 +1,11 @@
-import { useSearchParams } from 'react-router-dom';
+import { User } from '../lib/types';
 
-function Topbar() {
-  const [searchParams] = useSearchParams();
-  const enableLogin = searchParams.get('enableLogin') === '1';
+interface Props {
+  user: User | null;
+}
 
+function Topbar({ user }: Props) {
+  console.log(user);
   return (
     <header className="bg-white">
       <div
@@ -28,14 +30,12 @@ function Topbar() {
 
           <div className="flex items-center gap-4">
             <div className="sm:gap-4 sm:flex">
-              {enableLogin && (
-                <a
-                  className="hidden sm:block px-5 py-2.5 text-sm font-medium text-teal-600 bg-gray-100 rounded-md hover:text-teal-600/75 transition"
-                  href="/login"
-                >
-                  Login
-                </a>
-              )}
+              <a
+                className="hidden sm:block px-5 py-2.5 text-sm font-medium text-teal-600 bg-gray-100 rounded-md hover:text-teal-600/75 transition"
+                href="/login"
+              >
+                {user ? `Hi ${user.user_metadata?.full_name}` : 'Login'}
+              </a>
             </div>
 
             <button

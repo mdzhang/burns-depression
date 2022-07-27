@@ -6,11 +6,7 @@ import Quiz from './pages/desktop/Quiz';
 import Auth from './components/Auth';
 import Topbar from './components/Topbar';
 import { supabase } from './lib/api';
-
-type User = {
-  id: string
-  email?: string
-}
+import { User } from './lib/types';
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -33,7 +29,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Topbar />
+      <Topbar user={user} />
 
       <Routes>
         <Route path="take-quiz" element={<Quiz />} />
