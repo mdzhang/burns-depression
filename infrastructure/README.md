@@ -10,6 +10,7 @@ The Vercel [Github](https://vercel.com/docs/concepts/git/vercel-for-github) inte
 
 ## Setup
 
+* Enter terraform subdirectory: `cd terraform`
 * Install [`asdf`](https://asdf-vm.com/)
 * Install `terraform`
   ```sh
