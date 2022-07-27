@@ -18,7 +18,7 @@ function Auth() {
           className="font-sans text-sm text-center pb-2 mb-1 mx-4 align-center text-gray-500"
         >
           Login to keep track of your results week to week.
-          We don’t use your data, and we won’t email you.
+          We won’t sell your data, and we won’t email you.
         </span>
 
         <div className="relative">

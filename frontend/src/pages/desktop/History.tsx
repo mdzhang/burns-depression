@@ -1,7 +1,9 @@
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ApiQuizResult, QuizResult, User } from '../../lib/types';
 import { supabase } from '../../lib/api';
+import InfoBanner from '../../components/InfoBanner';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
 import { isMobileBrowser } from '../../utils/device';
 
@@ -22,8 +24,12 @@ const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((
 
 function History({ user }: Props) {
   const [results, setResults] = useState<QuizResult[]>([]);
+  const [showInfo, setShowInfo] = useState(false);
+  const navigate = useNavigate();
 
   const getResults = async () => {
+    if (!user) { return; }
+
     const { data, error } = await supabase
       .from('quiz_results');
 
@@ -36,11 +42,17 @@ function History({ user }: Props) {
   };
 
   useEffect(() => {
-    getResults();
+    if (user === null) {
+      setShowInfo(true);
+    } else {
+      setShowInfo(false);
+      getResults();
+    }
   }, [user]);
 
   return (
     <div>
+      {showInfo && <InfoBanner title="Login to see your history" onClick={() => navigate('/login')} />}
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm divide-y divide-gray-200">
           <thead>
