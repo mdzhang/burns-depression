@@ -22,7 +22,7 @@ function ButtonRange({ setValue, value, offset = 0 }: Props) {
         .map((num) => (
           <button
             key={num}
-            style={{ margin: '0 5px' }}
+            style={{ margin: `0 5px 0 ${num === 0 ? '0' : '5'}px` }}
             onClick={() => setValue((num + offset).toString())}
             className={`${defaultClassNames} ${
               selected((num + offset).toString())
