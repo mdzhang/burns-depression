@@ -10,7 +10,7 @@ function Auth() {
   const buttonClassNames = 'w-3/4 mx-auto flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-700 focus:outline-none focus:border-teal-500 focus:shadow-outline-teal active:bg-teal-500 transition duration-150 ease-in-out';
 
   return (
-    <div className="h-screen flex">
+    <div className="my-16">
 
       <div
         className="w-full h-full sm:h-auto sm:w-2/5 max-w-sm p-5 bg-white shadow flex flex-col text-base border m-auto"
