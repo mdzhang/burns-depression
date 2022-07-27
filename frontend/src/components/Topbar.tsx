@@ -92,8 +92,6 @@ function Topbar({ user }: Props) {
               </svg>
             </button>
           </div>
-
-          {/* end right bar */}
         </div>
       </div>
     </header>
