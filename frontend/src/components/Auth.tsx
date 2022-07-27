@@ -11,10 +11,16 @@ function Auth() {
 
   return (
     <div className="my-16">
-
       <div
         className="w-full h-full sm:h-auto sm:w-2/5 max-w-sm p-5 bg-white shadow flex flex-col text-base border m-auto"
       >
+        <span
+          className="font-sans text-sm text-center pb-2 mb-1 mx-4 align-center text-gray-500"
+        >
+          Login to keep track of your results week to week.
+          We don’t use your data, and we won’t email you.
+        </span>
+
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full mx-1.5 border-t border-gray-300" />
