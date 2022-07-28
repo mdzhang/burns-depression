@@ -36,11 +36,17 @@ function Quiz({ user }: Props) {
       console.warn(`Could not find matching range for total: ${total}`);
     }
 
+    return total;
+  };
+
+  const submitScore = async (answers: { [key: string]: string; }) => {
+    const total = updatePoints(answers, true);
+
     // store locally
     const date = new Date(Date.now()).toISOString().slice(0, 10);
     const result = {
       date,
-      raw: model,
+      raw: answers,
       total,
     };
 
@@ -53,7 +59,7 @@ function Quiz({ user }: Props) {
         .insert([
           {
             user_id: user.id,
-            result: JSON.stringify(model),
+            result: JSON.stringify(answers),
           },
         ]);
 
@@ -83,7 +89,7 @@ function Quiz({ user }: Props) {
       </p>
 
       <Formsy
-        onValidSubmit={(model) => updatePoints(model, true)}
+        onValidSubmit={(model) => submitScore(model)}
         onChange={(model) => updatePoints(model, false)}
       >
         <table className="table-auto rounded-lg">
