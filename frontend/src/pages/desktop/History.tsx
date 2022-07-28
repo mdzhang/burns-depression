@@ -41,6 +41,22 @@ function History({ user }: Props) {
     }
   };
 
+  const deleteAllResults = async () => {
+    if (!user) { return; }
+
+    const { error } = await supabase
+      .from('quiz_results')
+      .delete()
+      .match({ user_id: user.id });
+
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.warn('Error deleting results', error);
+    } else {
+      setResults([]);
+    }
+  };
+
   useEffect(() => {
     if (user === null) {
       setShowInfo(true);
@@ -127,6 +143,18 @@ function History({ user }: Props) {
             ))}
           </tbody>
         </table>
+
+        {user && results.length > 0 && (
+          <div className="my-4 grid place-items-center pt-4">
+            <button
+              type="submit"
+              className="flex-shrink-0  text-sm border-4 text-white py-1 px-2 rounded bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700"
+              onClick={deleteAllResults}
+            >
+              Delete all my data
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
