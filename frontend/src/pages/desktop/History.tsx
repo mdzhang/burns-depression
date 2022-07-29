@@ -1,8 +1,10 @@
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Alert, Table } from 'antd';
+import {
+  Alert, Table, Col, Row, Button, Popconfirm,
+} from 'antd';
 
+import LoginModal from '../../components/LoginModal';
 import { ApiQuizResult, QuizResult, User } from '../../lib/types';
 import { supabase } from '../../lib/api';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
@@ -26,7 +28,10 @@ const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((
 function History({ user }: Props) {
   const [results, setResults] = useState<QuizResult[]>([]);
   const [showInfo, setShowInfo] = useState(false);
-  const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isPopconfirmVisible, setShowDeleteConfirm] = useState(false);
+
+  const closeModal = () => setIsModalVisible(false);
 
   const getResults = async () => {
     if (!user) { return; }
@@ -71,18 +76,22 @@ function History({ user }: Props) {
     {
       title: 'Date',
       key: 'date',
+      dataIndex: 'date',
     },
     {
       title: 'Level of Depression',
       key: 'level',
+      dataIndex: 'level',
     },
     {
       title: 'Score',
       key: 'score',
+      dataIndex: 'score',
     },
   ];
 
   const data = results.map((result) => ({
+    key: result.id,
     date: result.createdAt.toLocaleString(
       isMobileBrowser() ? DateTime.DATE_SHORT : DateTime.DATETIME_FULL,
     ),
@@ -93,23 +102,33 @@ function History({ user }: Props) {
   return (
     <div>
       <div className="overflow-x-auto">
-        {showInfo && <Alert message="Login to see your history" type="info" showIcon onClick={() => navigate('/login')} />}
+        {showInfo && <Alert message="Login to see your history" type="info" showIcon onClick={() => setIsModalVisible(true)} />}
 
         <Table dataSource={data} columns={columns} />
-        ;
 
         {user && results.length > 0 && (
-        <div className="my-4 grid place-items-center pt-4">
-          <button
-            type="submit"
-            className="flex-shrink-0  text-sm border-4 text-white py-1 px-2 rounded bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700"
-            onClick={deleteAllResults}
-          >
-            Delete all my data
-          </button>
-        </div>
+          <Row>
+            <Col xs={2} sm={4} md={6} lg={8} xl={10} />
+            <Col xs={20} sm={16} md={12} lg={8} xl={4}>
+              <Popconfirm
+                title="Really?"
+                visible={isPopconfirmVisible}
+                onConfirm={deleteAllResults}
+                onCancel={() => setShowDeleteConfirm(false)}
+              >
+                <Button
+                  type="primary"
+                  danger
+                  onClick={() => setShowDeleteConfirm(true)}
+                >
+                  Delete all my data
+                </Button>
+              </Popconfirm>
+            </Col>
+          </Row>
         )}
       </div>
+      <LoginModal visible={isModalVisible} onClose={closeModal} />
     </div>
   );
 }

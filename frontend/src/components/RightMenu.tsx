@@ -9,7 +9,6 @@ interface Props {
 }
 
 function RightMenu({ user }: Props) {
-  console.log(user);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
 
