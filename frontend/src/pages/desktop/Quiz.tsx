@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
-  Alert, Radio, Button, Form,
+  Radio, Button, Form, Modal,
 } from 'antd';
 
 import styles from './Quiz.module.css';
@@ -16,26 +17,19 @@ interface Props {
 
 function Quiz({ user }: Props) {
   const [levelOfDepression, setLevelOfDepression] = useState('');
-  const [showResults, setShowResults] = useState(false);
   const [points, setPoints] = useState(0);
   const [form] = Form.useForm();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const closeModal = () => setIsModalVisible(false);
+  const navigate = useNavigate();
 
   const initialValues = questions
     .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});
 
-  const getMessage = () => {
-    const verb = levelOfDepression === 'Normal but unhappy' ? ' are ' : ' have ';
-
-    return `You scored ${points}. You ${verb} ${levelOfDepression.toLowerCase()}`;
-  };
-
-  const updatePoints = async (
-    shouldSetShowResults: boolean = false,
-  ) => {
+  const updatePoints = async () => {
     const model = form.getFieldsValue();
     const total = getScore(model);
 
-    setShowResults(shouldSetShowResults);
     setPoints(total);
 
     const level = getLevelOfDepression(total);
@@ -51,7 +45,7 @@ function Quiz({ user }: Props) {
 
   const submitScore = async () => {
     const answers = form.getFieldsValue();
-    const total = updatePoints(true);
+    const total = updatePoints();
 
     // store locally
     const date = new Date(Date.now()).toISOString().slice(0, 10);
@@ -82,6 +76,8 @@ function Quiz({ user }: Props) {
         console.info('Saved results', data);
       }
     }
+
+    setIsModalVisible(true);
   };
 
   return (
@@ -103,12 +99,13 @@ function Quiz({ user }: Props) {
         layout="horizontal"
         form={form}
         labelCol={{ span: 14 }}
-        wrapperCol={{ span: 16 }}
+        wrapperCol={{ span: 24 }}
         labelAlign="left"
-        onValuesChange={() => updatePoints(false)}
+        onValuesChange={updatePoints}
         initialValues={initialValues}
         onFinish={submitScore}
         colon={false}
+        labelWrap
       >
         {questions.map((entry) => (
           <div key={entry.category}>
@@ -138,9 +135,35 @@ function Quiz({ user }: Props) {
         </Form.Item>
       </Form>
 
-      {showResults && (
-        <Alert message={getMessage()} banner type="info" />
-      )}
+      <Modal
+        visible={isModalVisible}
+        title="Results"
+        onOk={closeModal}
+        onCancel={closeModal}
+        footer={[
+          <Button key="back" onClick={closeModal}>
+            Return
+          </Button>,
+          <Button key="submit" type="primary" onClick={() => navigate('/history')}>
+            See history
+          </Button>,
+        ]}
+      >
+        <div style={{ textAlign: 'center' }}>
+          You scored
+          {' '}
+          <b>
+            { points }
+          </b>
+          .
+          You
+          {levelOfDepression === 'Normal but unhappy' ? ' are ' : ' have '}
+          <b>
+            { levelOfDepression.toLowerCase() }
+            .
+          </b>
+        </div>
+      </Modal>
     </main>
   );
 }
