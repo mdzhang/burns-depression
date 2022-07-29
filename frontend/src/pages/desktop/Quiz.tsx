@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Formsy from 'formsy-react';
 
+import styles from './Quiz.module.css';
 import ButtonRange from '../../components/desktop/forms/ButtonRange';
 import questions from '../../data/questions.json';
 
-import styles from './Quiz.module.css';
 import { isMobileBrowser } from '../../utils/device';
 import { supabase } from '../../lib/api';
 import { User } from '../../lib/types';

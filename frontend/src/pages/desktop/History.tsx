@@ -1,9 +1,10 @@
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Alert, Table } from 'antd';
+
 import { ApiQuizResult, QuizResult, User } from '../../lib/types';
 import { supabase } from '../../lib/api';
-import InfoBanner from '../../components/InfoBanner';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
 import { isMobileBrowser } from '../../utils/device';
 
@@ -66,94 +67,47 @@ function History({ user }: Props) {
     }
   }, [user]);
 
+  const columns = [
+    {
+      title: 'Date',
+      key: 'date',
+    },
+    {
+      title: 'Level of Depression',
+      key: 'level',
+    },
+    {
+      title: 'Score',
+      key: 'score',
+    },
+  ];
+
+  const data = results.map((result) => ({
+    date: result.createdAt.toLocaleString(
+      isMobileBrowser() ? DateTime.DATE_SHORT : DateTime.DATETIME_FULL,
+    ),
+    level: getLevelOfDepression(result.total),
+    score: result.total,
+  }));
+
   return (
     <div>
-      {showInfo && <InfoBanner title="Login to see your history" onClick={() => navigate('/login')} />}
       <div className="overflow-x-auto">
-        <table className="min-w-full text-sm divide-y divide-gray-200">
-          <thead>
-            <tr>
-              <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
-                <div className="flex items-center">
-                  Date
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 ml-1.5 text-gray-700"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </th>
-              <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
-                <div className="flex items-center">
-                  Level of Depression
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 ml-1.5 text-gray-700"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </th>
-              <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
-                <div className="flex items-center">
-                  Score
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 ml-1.5 text-gray-700"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </th>
-            </tr>
-          </thead>
+        {showInfo && <Alert message="Login to see your history" type="info" showIcon onClick={() => navigate('/login')} />}
 
-          <tbody className="divide-y divide-gray-100">
-            {results.map((result) => (
-              <tr key={result.id}>
-                <td className="p-4 text-gray-700 whitespace-nowrap">{result.createdAt.toLocaleString(isMobileBrowser() ? DateTime.DATE_SHORT : DateTime.DATETIME_FULL)}</td>
-                <td className="p-4 text-gray-700 whitespace-nowrap">
-                  <strong
-                    className="bg-red-100 text-red-700 px-3 py-1.5 rounded text-xs font-medium"
-                  >
-                    {getLevelOfDepression(result.total)}
-                  </strong>
-                </td>
-                <td className="p-4 text-gray-700 whitespace-nowrap">{result.total}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table dataSource={data} columns={columns} />
+        ;
 
         {user && results.length > 0 && (
-          <div className="my-4 grid place-items-center pt-4">
-            <button
-              type="submit"
-              className="flex-shrink-0  text-sm border-4 text-white py-1 px-2 rounded bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700"
-              onClick={deleteAllResults}
-            >
-              Delete all my data
-            </button>
-          </div>
+        <div className="my-4 grid place-items-center pt-4">
+          <button
+            type="submit"
+            className="flex-shrink-0  text-sm border-4 text-white py-1 px-2 rounded bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700"
+            onClick={deleteAllResults}
+          >
+            Delete all my data
+          </button>
+        </div>
         )}
       </div>
     </div>
