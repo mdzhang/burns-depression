@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Formsy from 'formsy-react';
 
 import styles from './Quiz.module.css';
-import ButtonRange from '../../components/desktop/forms/ButtonRange';
+import ButtonRange from '../../components/ButtonRange';
 import questions from '../../data/questions.json';
 
 import { isMobileBrowser } from '../../utils/device';
@@ -92,12 +92,12 @@ function Quiz({ user }: Props) {
         onValidSubmit={(model) => submitScore(model)}
         onChange={(model) => updatePoints(model, false)}
       >
-        <table className="table-auto rounded-lg">
+        <table>
           <tbody>
             {questions.map((entry) => (
               <>
                 <tr>
-                  <td className="px-4 py-2 pt-8">
+                  <td>
                     <b>
                       {entry.category}
                     </b>
@@ -106,23 +106,17 @@ function Quiz({ user }: Props) {
                 </tr>
                 {entry.questions.map((question) => (
                   <tr key={question}>
-                    <td
-                      className="border px-4 py-2"
-                    >
+                    <td>
                       {question}
 
                       {isMobileBrowser() && (
-                        <div
-                          className="py-2"
-                        >
+                        <div>
                           <ButtonRange name={question} value="0" />
                         </div>
                       )}
                     </td>
                     {!isMobileBrowser() && (
-                      <td
-                        className="border px-4 py-2"
-                      >
+                      <td>
                         <ButtonRange name={question} value="0" />
                       </td>
                     )}
@@ -133,10 +127,9 @@ function Quiz({ user }: Props) {
           </tbody>
         </table>
 
-        <div className="my-4 grid place-items-center pt-4">
+        <div>
           <button
             type="submit"
-            className="flex-shrink-0  text-sm border-4 text-white py-1 px-2 rounded bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700"
           >
             See my results
           </button>
@@ -145,16 +138,16 @@ function Quiz({ user }: Props) {
       </Formsy>
 
       {showResults && (
-        <div className="text-xl" style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
           You scored
           {' '}
-          <span className="font-bold">
+          <span>
             { points }
           </span>
           .
           You
           {levelOfDepression === 'Normal but unhappy' ? ' are ' : ' have '}
-          <span className="font-bold">
+          <span>
             { levelOfDepression.toLowerCase() }
             .
           </span>
