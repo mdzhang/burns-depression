@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Radio, Button, Form } from 'antd';
+import {
+  Alert, Radio, Button, Form,
+} from 'antd';
 
 import styles from './Quiz.module.css';
 import questions from '../../data/questions.json';
@@ -20,6 +22,13 @@ function Quiz({ user }: Props) {
 
   const initialValues = questions
     .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});
+
+  const getMessage = () => {
+    const verb = levelOfDepression === 'Normal but unhappy' ? ' are ' : ' have ';
+
+    return `You scored ${points}. You ${verb} ${levelOfDepression.toLowerCase()}`;
+  };
+
   const updatePoints = async (
     shouldSetShowResults: boolean = false,
   ) => {
@@ -38,10 +47,6 @@ function Quiz({ user }: Props) {
     }
 
     return total;
-  };
-
-  const onFail = (props: any) => {
-    console.log(props);
   };
 
   const submitScore = async () => {
@@ -103,13 +108,13 @@ function Quiz({ user }: Props) {
         onValuesChange={() => updatePoints(false)}
         initialValues={initialValues}
         onFinish={submitScore}
-        onFinishFailed={onFail}
+        colon={false}
       >
         {questions.map((entry) => (
           <div key={entry.category}>
-            <b>
+            <h2>
               {entry.category}
-            </b>
+            </h2>
 
             {entry.questions.map((question) => (
               <Form.Item label={question} name={question} key={question}>
@@ -128,26 +133,13 @@ function Quiz({ user }: Props) {
           </div>
         ))}
 
-        <Form.Item>
-          <Button type="primary">See my results</Button>
+        <Form.Item label=" ">
+          <Button type="primary" htmlType="submit">See my results</Button>
         </Form.Item>
       </Form>
 
       {showResults && (
-        <div style={{ textAlign: 'center' }}>
-          You scored
-          {' '}
-          <span>
-            { points }
-          </span>
-          .
-          You
-          {levelOfDepression === 'Normal but unhappy' ? ' are ' : ' have '}
-          <span>
-            { levelOfDepression.toLowerCase() }
-            .
-          </span>
-        </div>
+        <Alert message={getMessage()} banner type="info" />
       )}
     </main>
   );
