@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import Formsy from 'formsy-react';
+import { Radio, Button, Form } from 'antd';
 
 import styles from './Quiz.module.css';
-import ButtonRange from '../../components/ButtonRange';
 import questions from '../../data/questions.json';
 
-import { isMobileBrowser } from '../../utils/device';
 import { supabase } from '../../lib/api';
 import { User } from '../../lib/types';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
@@ -18,11 +16,14 @@ function Quiz({ user }: Props) {
   const [levelOfDepression, setLevelOfDepression] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [points, setPoints] = useState(0);
+  const [form] = Form.useForm();
 
+  const initialValues = questions
+    .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});
   const updatePoints = async (
-    model: { [key: string]: string; },
     shouldSetShowResults: boolean = false,
   ) => {
+    const model = form.getFieldsValue();
     const total = getScore(model);
 
     setShowResults(shouldSetShowResults);
@@ -39,8 +40,13 @@ function Quiz({ user }: Props) {
     return total;
   };
 
-  const submitScore = async (answers: { [key: string]: string; }) => {
-    const total = updatePoints(answers, true);
+  const onFail = (props: any) => {
+    console.log(props);
+  };
+
+  const submitScore = async () => {
+    const answers = form.getFieldsValue();
+    const total = updatePoints(true);
 
     // store locally
     const date = new Date(Date.now()).toISOString().slice(0, 10);
@@ -88,54 +94,44 @@ function Quiz({ user }: Props) {
         </a>
       </p>
 
-      <Formsy
-        onValidSubmit={(model) => submitScore(model)}
-        onChange={(model) => updatePoints(model, false)}
+      <Form
+        layout="horizontal"
+        form={form}
+        labelCol={{ span: 14 }}
+        wrapperCol={{ span: 16 }}
+        labelAlign="left"
+        onValuesChange={() => updatePoints(false)}
+        initialValues={initialValues}
+        onFinish={submitScore}
+        onFinishFailed={onFail}
       >
-        <table>
-          <tbody>
-            {questions.map((entry) => (
-              <>
-                <tr>
-                  <td>
-                    <b>
-                      {entry.category}
-                    </b>
-                  </td>
-                  <td />
-                </tr>
-                {entry.questions.map((question) => (
-                  <tr key={question}>
-                    <td>
-                      {question}
+        {questions.map((entry) => (
+          <div key={entry.category}>
+            <b>
+              {entry.category}
+            </b>
 
-                      {isMobileBrowser() && (
-                        <div>
-                          <ButtonRange name={question} value="0" />
-                        </div>
-                      )}
-                    </td>
-                    {!isMobileBrowser() && (
-                      <td>
-                        <ButtonRange name={question} value="0" />
-                      </td>
-                    )}
-                  </tr>
-                ))}
-              </>
+            {entry.questions.map((question) => (
+              <Form.Item label={question} name={question} key={question}>
+                <Radio.Group>
+                  {
+                    [0, 1, 2, 3, 4]
+                      .map((num) => (
+                        <Radio.Button value={num} key={num}>
+                          {num}
+                        </Radio.Button>
+                      ))
+                  }
+                </Radio.Group>
+              </Form.Item>
             ))}
-          </tbody>
-        </table>
+          </div>
+        ))}
 
-        <div>
-          <button
-            type="submit"
-          >
-            See my results
-          </button>
-        </div>
-
-      </Formsy>
+        <Form.Item>
+          <Button type="primary">See my results</Button>
+        </Form.Item>
+      </Form>
 
       {showResults && (
         <div style={{ textAlign: 'center' }}>

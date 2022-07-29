@@ -1,13 +1,12 @@
-import { withFormsy } from 'formsy-react';
 import { Radio } from 'antd';
 
 interface Props {
-  setValue: any;
+  onClick: () => {};
 }
 
-function ButtonRange({ setValue }: Props) {
+function ButtonRange({ onClick }: Props) {
   return (
-    <Radio.Group onChange={setValue} defaultValue="a">
+    <Radio.Group onChange={onClick} defaultValue="a">
       {
         [0, 1, 2, 3, 4]
           .map((num) => (
@@ -20,4 +19,4 @@ function ButtonRange({ setValue }: Props) {
   );
 }
 
-export default withFormsy(ButtonRange);
+export default ButtonRange;
