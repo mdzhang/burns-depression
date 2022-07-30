@@ -4,40 +4,35 @@
   background: white;
 }
 
-.menu__container .ant-menu-item {
+.menu_container .ant-menu-item {
   padding: 0px 5px;
 }
 
-.menu__container .ant-menu-submenu-title {
+.menu_container .ant-menu-submenu-title {
   padding: 10px 20px;
 }
 
-.menu__container .ant-menu-item a,
-.menu__container .ant-menu-submenu-title a {
+.menu_container .ant-menu-item a,
+.menu_container .ant-menu-submenu-title a {
   padding: 10px 15px;
 }
 
-.menu__container .ant-menu-horizontal {
+.menu_container .ant-menu-horizontal {
   border-bottom: none;
 }
 
-.menu__container .menu_left {
+.menu_container .menu_left {
   float: left;
   min-width: 20em;
 }
 
-.menu__container .menu_right {
+.menu_container .menu_right {
   float: right;
   min-width: 20em;
 }
 
-.menu__mobile-button {
-  float: right;
-  height: 32px;
-  padding: 6px 0px;
-  margin-top: 8px;
+.menu_mobile-button {
   display: none !important; /* use of important to overwrite ant-btn */
-  background: #3e91f7;
 }
 
 .menu_drawer .ant-drawer-body {
@@ -50,8 +45,11 @@
 }
 
 @media (max-width: 767px) {
-  .menu__mobile-button {
+  .menu_mobile-button {
     display: inline-block !important;
+    line-height: 22px;
+    float: right;
+    padding: 16px 0;
   }
 
   .menu_left,
@@ -59,8 +57,8 @@
     display: none;
   }
 
-  .menu__container .ant-menu-item,
-  .menu__container .ant-menu-submenu-title {
+  .menu_container .ant-menu-item,
+  .menu_container .ant-menu-submenu-title {
     padding: 1px 20px;
   }
 }

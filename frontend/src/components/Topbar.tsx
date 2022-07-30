@@ -19,7 +19,7 @@ function Topbar({ user }: Props) {
   return (
     <Affix>
       <nav className="menu">
-        <div className="menu__container">
+        <div className="menu_container">
           <div className="menu_left">
             <LeftMenu />
           </div>
