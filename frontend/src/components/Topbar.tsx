@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import { Affix, Drawer, Button } from 'antd';
+import {
+  Menu, Affix, Drawer,
+} from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
 import { User } from '../lib/types';
 import LeftMenu from './LeftMenu';
 import RightMenu from './RightMenu';
+import LoginLogoutMenuItem from './LoginLogoutMenuItem';
 import './Topbar.css';
 
 interface Props {
@@ -23,21 +27,26 @@ function Topbar({ user }: Props) {
             <RightMenu user={user} />
           </div>
 
-          <Button className="menu__mobile-button" type="primary" onClick={() => setShowDrawer(true)}>
-            <span className="barsBtn" />
-          </Button>
+          <div className="menu_mobile-button">
+            <MenuOutlined onClick={() => setShowDrawer(true)} />
+          </div>
+
           <Drawer
-            title="Basic Drawer"
-            className="menu_drawer"
+            title="Menu"
             placement="right"
-            closable={false}
             onClose={() => setShowDrawer(false)}
             visible={showDrawer}
           >
-            <LeftMenu />
-            <RightMenu user={user} />
+            <Menu>
+              <Menu.Item key="take-quiz">
+                <a href="/take-quiz">Take Quiz</a>
+              </Menu.Item>
+              <Menu.Item key="history">
+                <a href="/history">History</a>
+              </Menu.Item>
+              <LoginLogoutMenuItem user={user} />
+            </Menu>
           </Drawer>
-
         </div>
       </nav>
     </Affix>
