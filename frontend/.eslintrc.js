@@ -13,24 +13,17 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: [
-    'jest',
-    'react',
-    '@typescript-eslint',
-  ],
+  plugins: ['jest', 'react', '@typescript-eslint'],
   rules: {
     // no longer needed w/ transformers
     'react/react-in-jsx-scope': 'off',
+    // incompatible with antd
+    'jsx-a11y/anchor-is-valid': 'off',
     // allow jsx in tsx
     'react/jsx-filename-extension': [
       2,
       {
-        extensions: [
-          '.js',
-          '.jsx',
-          '.ts',
-          '.tsx',
-        ],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     ],
     // OOTB not working w/ react app
@@ -38,8 +31,6 @@ module.exports = {
     'import/no-unresolved': 'off',
     // no-unused-vars will misidentify TS types
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-    ],
+    '@typescript-eslint/no-unused-vars': ['error'],
   },
 };

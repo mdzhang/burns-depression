@@ -1,9 +1,12 @@
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {
+  Alert, Table, Col, Row, Button, Popconfirm,
+} from 'antd';
+
+import LoginModal from '../../components/LoginModal';
 import { ApiQuizResult, QuizResult, User } from '../../lib/types';
 import { supabase } from '../../lib/api';
-import InfoBanner from '../../components/InfoBanner';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
 import { isMobileBrowser } from '../../utils/device';
 
@@ -25,7 +28,10 @@ const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((
 function History({ user }: Props) {
   const [results, setResults] = useState<QuizResult[]>([]);
   const [showInfo, setShowInfo] = useState(false);
-  const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isPopconfirmVisible, setShowDeleteConfirm] = useState(false);
+
+  const closeModal = () => setIsModalVisible(false);
 
   const getResults = async () => {
     if (!user) { return; }
@@ -66,96 +72,63 @@ function History({ user }: Props) {
     }
   }, [user]);
 
+  const columns = [
+    {
+      title: 'Date',
+      key: 'date',
+      dataIndex: 'date',
+    },
+    {
+      title: 'Level of Depression',
+      key: 'level',
+      dataIndex: 'level',
+    },
+    {
+      title: 'Score',
+      key: 'score',
+      dataIndex: 'score',
+    },
+  ];
+
+  const data = results.map((result) => ({
+    key: result.id,
+    date: result.createdAt.toLocaleString(
+      isMobileBrowser() ? DateTime.DATE_SHORT : DateTime.DATETIME_FULL,
+    ),
+    level: getLevelOfDepression(result.total),
+    score: result.total,
+  }));
+
   return (
     <div>
-      {showInfo && <InfoBanner title="Login to see your history" onClick={() => navigate('/login')} />}
       <div className="overflow-x-auto">
-        <table className="min-w-full text-sm divide-y divide-gray-200">
-          <thead>
-            <tr>
-              <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
-                <div className="flex items-center">
-                  Date
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 ml-1.5 text-gray-700"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </th>
-              <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
-                <div className="flex items-center">
-                  Level of Depression
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 ml-1.5 text-gray-700"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </th>
-              <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap">
-                <div className="flex items-center">
-                  Score
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 ml-1.5 text-gray-700"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </th>
-            </tr>
-          </thead>
+        {showInfo && <Alert message="Login to see your history" type="info" showIcon onClick={() => setIsModalVisible(true)} />}
 
-          <tbody className="divide-y divide-gray-100">
-            {results.map((result) => (
-              <tr key={result.id}>
-                <td className="p-4 text-gray-700 whitespace-nowrap">{result.createdAt.toLocaleString(isMobileBrowser() ? DateTime.DATE_SHORT : DateTime.DATETIME_FULL)}</td>
-                <td className="p-4 text-gray-700 whitespace-nowrap">
-                  <strong
-                    className="bg-red-100 text-red-700 px-3 py-1.5 rounded text-xs font-medium"
-                  >
-                    {getLevelOfDepression(result.total)}
-                  </strong>
-                </td>
-                <td className="p-4 text-gray-700 whitespace-nowrap">{result.total}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table dataSource={data} columns={columns} />
 
         {user && results.length > 0 && (
-          <div className="my-4 grid place-items-center pt-4">
-            <button
-              type="submit"
-              className="flex-shrink-0  text-sm border-4 text-white py-1 px-2 rounded bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700"
-              onClick={deleteAllResults}
-            >
-              Delete all my data
-            </button>
-          </div>
+          <Row>
+            <Col xs={2} sm={4} md={6} lg={8} xl={10} />
+            <Col xs={20} sm={16} md={12} lg={8} xl={4}>
+              <Popconfirm
+                title="Really?"
+                visible={isPopconfirmVisible}
+                onConfirm={deleteAllResults}
+                onCancel={() => setShowDeleteConfirm(false)}
+              >
+                <Button
+                  type="primary"
+                  danger
+                  onClick={() => setShowDeleteConfirm(true)}
+                >
+                  Delete all my data
+                </Button>
+              </Popconfirm>
+            </Col>
+          </Row>
         )}
       </div>
+      <LoginModal visible={isModalVisible} onClose={closeModal} />
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import Formsy from 'formsy-react';
-
-import ButtonRange from '../../components/desktop/forms/ButtonRange';
-import questions from '../../data/questions.json';
+import { useNavigate } from 'react-router-dom';
+import {
+  Radio, Button, Form, Modal,
+} from 'antd';
 
 import styles from './Quiz.module.css';
-import { isMobileBrowser } from '../../utils/device';
+import questions from '../../data/questions.json';
+
 import { supabase } from '../../lib/api';
 import { User } from '../../lib/types';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
@@ -16,16 +17,19 @@ interface Props {
 
 function Quiz({ user }: Props) {
   const [levelOfDepression, setLevelOfDepression] = useState('');
-  const [showResults, setShowResults] = useState(false);
   const [points, setPoints] = useState(0);
+  const [form] = Form.useForm();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const closeModal = () => setIsModalVisible(false);
+  const navigate = useNavigate();
 
-  const updatePoints = async (
-    model: { [key: string]: string; },
-    shouldSetShowResults: boolean = false,
-  ) => {
+  const initialValues = questions
+    .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});
+
+  const updatePoints = async () => {
+    const model = form.getFieldsValue();
     const total = getScore(model);
 
-    setShowResults(shouldSetShowResults);
     setPoints(total);
 
     const level = getLevelOfDepression(total);
@@ -39,8 +43,9 @@ function Quiz({ user }: Props) {
     return total;
   };
 
-  const submitScore = async (answers: { [key: string]: string; }) => {
-    const total = updatePoints(answers, true);
+  const submitScore = async () => {
+    const answers = form.getFieldsValue();
+    const total = updatePoints();
 
     // store locally
     const date = new Date(Date.now()).toISOString().slice(0, 10);
@@ -71,6 +76,8 @@ function Quiz({ user }: Props) {
         console.info('Saved results', data);
       }
     }
+
+    setIsModalVisible(true);
   };
 
   return (
@@ -88,78 +95,75 @@ function Quiz({ user }: Props) {
         </a>
       </p>
 
-      <Formsy
-        onValidSubmit={(model) => submitScore(model)}
-        onChange={(model) => updatePoints(model, false)}
+      <Form
+        layout="horizontal"
+        form={form}
+        labelCol={{ span: 14 }}
+        wrapperCol={{ span: 24 }}
+        labelAlign="left"
+        onValuesChange={updatePoints}
+        initialValues={initialValues}
+        onFinish={submitScore}
+        colon={false}
+        labelWrap
       >
-        <table className="table-auto rounded-lg">
-          <tbody>
-            {questions.map((entry) => (
-              <>
-                <tr>
-                  <td className="px-4 py-2 pt-8">
-                    <b>
-                      {entry.category}
-                    </b>
-                  </td>
-                  <td />
-                </tr>
-                {entry.questions.map((question) => (
-                  <tr key={question}>
-                    <td
-                      className="border px-4 py-2"
-                    >
-                      {question}
+        {questions.map((entry) => (
+          <div key={entry.category}>
+            <h2>
+              {entry.category}
+            </h2>
 
-                      {isMobileBrowser() && (
-                        <div
-                          className="py-2"
-                        >
-                          <ButtonRange name={question} value="0" />
-                        </div>
-                      )}
-                    </td>
-                    {!isMobileBrowser() && (
-                      <td
-                        className="border px-4 py-2"
-                      >
-                        <ButtonRange name={question} value="0" />
-                      </td>
-                    )}
-                  </tr>
-                ))}
-              </>
+            {entry.questions.map((question) => (
+              <Form.Item label={question} name={question} key={question}>
+                <Radio.Group>
+                  {
+                    [0, 1, 2, 3, 4]
+                      .map((num) => (
+                        <Radio.Button value={num} key={num}>
+                          {num}
+                        </Radio.Button>
+                      ))
+                  }
+                </Radio.Group>
+              </Form.Item>
             ))}
-          </tbody>
-        </table>
+          </div>
+        ))}
 
-        <div className="my-4 grid place-items-center pt-4">
-          <button
-            type="submit"
-            className="flex-shrink-0  text-sm border-4 text-white py-1 px-2 rounded bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700"
-          >
-            See my results
-          </button>
-        </div>
+        <Form.Item label=" ">
+          <Button type="primary" htmlType="submit">See my results</Button>
+        </Form.Item>
+      </Form>
 
-      </Formsy>
-
-      {showResults && (
-        <div className="text-xl" style={{ textAlign: 'center' }}>
+      <Modal
+        visible={isModalVisible}
+        title="Results"
+        onOk={closeModal}
+        onCancel={closeModal}
+        footer={[
+          <Button key="back" onClick={closeModal}>
+            Return
+          </Button>,
+          <Button key="submit" type="primary" onClick={() => navigate('/history')}>
+            See history
+          </Button>,
+        ]}
+      >
+        <div style={{ textAlign: 'center' }}>
           You scored
           {' '}
-          <span className="font-bold">
+          <b>
             { points }
-          </span>
+          </b>
           .
           You
           {levelOfDepression === 'Normal but unhappy' ? ' are ' : ' have '}
-          <span className="font-bold">
+          <b>
             { levelOfDepression.toLowerCase() }
             .
-          </span>
+          </b>
         </div>
-      )}
+      </Modal>
     </main>
   );
 }

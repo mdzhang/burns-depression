@@ -4,8 +4,8 @@ import { BrowserRouter, Navigate } from 'react-router-dom';
 
 import Quiz from './pages/desktop/Quiz';
 import History from './pages/desktop/History';
-import Auth from './components/Auth';
 import Topbar from './components/Topbar';
+
 import { supabase } from './lib/api';
 import { User } from './lib/types';
 
@@ -38,7 +38,6 @@ function App() {
           path="history"
           element={<History user={user} />}
         />
-        <Route path="login" element={<Auth />} />
         <Route
           path="*"
           element={<Navigate to="/take-quiz" replace />}
