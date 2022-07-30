@@ -1,7 +1,7 @@
 import ranges from '../data/ranges.json';
 
 /**
- * Score the Formsy form model that has quiz questions as keys
+ * Score the answers object that has quiz questions as keys
  * and quiz question numbers as string values.
  */
 export function getScore(model: { [key: string]: string }) {
