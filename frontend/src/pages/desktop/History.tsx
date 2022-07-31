@@ -7,7 +7,7 @@ import {
 import LoginModal from '../../components/LoginModal';
 import { ApiQuizResult, QuizResult } from '../../lib/types';
 import { supabase } from '../../lib/api';
-import { UserContext } from '../../lib/contexts';
+import { AppContext } from '../../lib/contexts';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
 import { isMobileBrowser } from '../../utils/device';
 
@@ -27,7 +27,7 @@ function History() {
   const [showInfo, setShowInfo] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPopconfirmVisible, setShowDeleteConfirm] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AppContext);
 
   const closeModal = () => setIsModalVisible(false);
 

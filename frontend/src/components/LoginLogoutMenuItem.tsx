@@ -1,13 +1,13 @@
 import { Menu } from 'antd';
 import { useContext, useState } from 'react';
 import { supabase } from '../lib/api';
-import { UserContext } from '../lib/contexts';
+import { AppContext } from '../lib/contexts';
 import LoginModal from './LoginModal';
 
 function LoginLogoutMenuItem() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
-  const userCtx = useContext(UserContext);
+  const userCtx = useContext(AppContext);
 
   const onLogout = async () => {
     const { error } = await supabase.auth.signOut();

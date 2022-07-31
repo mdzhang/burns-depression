@@ -8,7 +8,7 @@ import styles from './Quiz.module.css';
 import questions from '../../data/questions.json';
 
 import { supabase } from '../../lib/api';
-import { UserContext } from '../../lib/contexts';
+import { AppContext } from '../../lib/contexts';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
 
 function Quiz() {
@@ -18,7 +18,7 @@ function Quiz() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AppContext);
 
   const initialValues = questions
     .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});

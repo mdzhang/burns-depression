@@ -7,10 +7,10 @@ import History from './pages/desktop/History';
 import Topbar from './components/Topbar';
 
 import { supabase } from './lib/api';
-import { UserContext, initialUserContext } from './lib/contexts';
+import { AppContext, initialAppContext } from './lib/contexts';
 
 function App() {
-  const userCtx = useContext(UserContext);
+  const userCtx = useContext(AppContext);
 
   useEffect(() => {
     const session = supabase.auth.session();
@@ -30,7 +30,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={initialUserContext}>
+      <AppContext.Provider value={initialAppContext}>
         <Topbar />
 
         <Routes>
@@ -44,7 +44,7 @@ function App() {
             element={<Navigate to="/take-quiz" replace />}
           />
         </Routes>
-      </UserContext.Provider>
+      </AppContext.Provider>
     </BrowserRouter>
   );
 }

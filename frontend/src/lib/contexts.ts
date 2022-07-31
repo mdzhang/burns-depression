@@ -1,12 +1,12 @@
 import { createContext } from 'react';
 import { User } from './types';
 
-interface UserContextInterface {
+interface AppContextInterface {
   user: User | null;
 }
 
-export const initialUserContext = {
+export const initialAppContext = {
   user: null,
 };
 
-export const UserContext = createContext<UserContextInterface>(initialUserContext);
+export const AppContext = createContext<AppContextInterface>(initialAppContext);

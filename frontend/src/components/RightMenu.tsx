@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { Menu } from 'antd';
 import LoginLogoutMenuItem from './LoginLogoutMenuItem';
-import { UserContext } from '../lib/contexts';
+import { AppContext } from '../lib/contexts';
 import './RightMenu.css';
 
 function RightMenu() {
-  const userCtx = useContext(UserContext);
+  const userCtx = useContext(AppContext);
 
   return (
     <Menu mode="horizontal">
