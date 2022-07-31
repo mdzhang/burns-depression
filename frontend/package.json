@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@capacitor/core": "^4.0.1",
     "@craco/craco": "^6.4.5",
     "@supabase/supabase-js": "^1.35.4",
     "@testing-library/jest-dom": "^5.16.4",
@@ -23,7 +24,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider craco build",
     "lint": "eslint './**/*.{ts,tsx}'",
     "lint-fix": "eslint --fix './**/*.{ts,tsx}'",
     "test": "craco test"

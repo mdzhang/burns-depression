@@ -1,0 +1,8 @@
+{
+  "appId": "io.ionic.amisad",
+  "appName": "Am I Sad",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}
