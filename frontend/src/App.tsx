@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router';
 import { BrowserRouter, Navigate } from 'react-router-dom';
 import { AppContext, initialAppContext } from './lib/contexts';
 import { appReducer, AppActionKind } from './lib/reducers';
+import { withLocalStorageCache } from './utils/caching';
 
 import Quiz from './pages/Quiz';
 import History from './pages/History';
@@ -17,7 +18,11 @@ import { supabase } from './lib/api';
 import { User } from './lib/types';
 
 function App() {
-  const [state, reducerDispatch] = useReducer(appReducer, initialAppContext.data);
+  const localState = localStorage.getItem('app');
+  const [state, reducerDispatch] = useReducer(
+    withLocalStorageCache(appReducer, 'app'),
+    localState ? JSON.parse(localState) : initialAppContext.data,
+  );
   const setUser = (u: User | undefined | null) => {
     reducerDispatch({ type: AppActionKind.LOAD_USER, data: { user: u ?? null } });
   };

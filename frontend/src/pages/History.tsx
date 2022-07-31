@@ -7,7 +7,7 @@ import {
 import LoginModal from '../components/LoginModal';
 import { ApiQuizResult, QuizResult } from '../lib/types';
 import { AppActionKind } from '../lib/reducers';
-import { supabase } from '../lib/api';
+import { getResults as apiGetResults, deleteAllResults as apiDeleteAllResults } from '../lib/api';
 import { AppContext } from '../lib/contexts';
 import { getScore, getLevelOfDepression } from '../utils/scoring';
 import { isMobileBrowser } from '../utils/device';
@@ -35,13 +35,8 @@ function History() {
     if (!user) {
       return;
     }
-    if (results.length !== 0) {
-      return;
-    }
 
-    const { data, error } = await supabase
-      .from('quiz_results');
-
+    const { data, error } = await apiGetResults();
     if (error) {
       // eslint-disable-next-line no-console
       console.warn('Error fetching results', error);
@@ -51,12 +46,12 @@ function History() {
   };
 
   const deleteAllResults = async () => {
-    if (!user) { return; }
+    if (!user) {
+      dispatch({ type: AppActionKind.LOAD_RESULTS, data: { results: [] } });
+      return;
+    }
 
-    const { error } = await supabase
-      .from('quiz_results')
-      .delete()
-      .match({ user_id: user.id });
+    const { error } = await apiDeleteAllResults(user);
 
     if (error) {
       // eslint-disable-next-line no-console

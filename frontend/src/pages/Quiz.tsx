@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -7,7 +8,8 @@ import {
 import styles from './Quiz.module.css';
 import questions from '../data/questions.json';
 
-import { supabase } from '../lib/api';
+import { saveResult } from '../lib/api';
+import { AppActionKind } from '../lib/reducers';
 import { AppContext } from '../lib/contexts';
 import { getScore, getLevelOfDepression } from '../utils/scoring';
 
@@ -18,7 +20,7 @@ function Quiz() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
   const navigate = useNavigate();
-  const { data: { user } } = useContext(AppContext);
+  const { data: { user, results }, dispatch } = useContext(AppContext);
 
   const initialValues = questions
     .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});
@@ -42,36 +44,18 @@ function Quiz() {
 
   const submitScore = async () => {
     const answers = form.getFieldsValue();
-    const total = updatePoints();
-
-    // store locally
-    const date = new Date(Date.now()).toISOString().slice(0, 10);
-    const result = {
-      date,
-      raw: answers,
-      total,
-    };
-
-    window.localStorage.setItem(`result_${date}`, JSON.stringify(result));
 
     // store remotely if logged in
     if (user) {
-      const { data, error } = await supabase
-        .from('quiz_results')
-        .insert([
-          {
-            user_id: user.id,
-            result: JSON.stringify(answers),
-          },
-        ]);
-
-      if (error) {
-        // eslint-disable-next-line no-console
-        console.warn('Error saving results', error);
-      } else {
-        // eslint-disable-next-line no-console
-        console.info('Saved results', data);
-      }
+      await saveResult(user, answers);
+    } else {
+      // add to reducer state which is cacahed in browser
+      const result = {
+        createdAt: DateTime.now(),
+        total: getScore(answers),
+        answers,
+      };
+      dispatch({ type: AppActionKind.LOAD_RESULTS, data: { results: [result, ...results] } });
     }
 
     setIsModalVisible(true);

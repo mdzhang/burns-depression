@@ -18,8 +18,9 @@ export type ApiQuizResult = {
 };
 
 export type QuizResult = {
-  id: number;
-  uid: string; // UUID
+  // results tracked before user logged in missing these fields
+  id?: number;
+  uid?: string; // UUID
   createdAt: DateTime;
   total: number;
   answers: { [key: string]: string };

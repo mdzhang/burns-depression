@@ -1,5 +1,5 @@
 import { Button, Modal } from 'antd';
-import { supabase } from '../lib/api';
+import { signIn } from '../lib/api';
 
 interface Props {
   visible: boolean;
@@ -8,11 +8,12 @@ interface Props {
 
 function LoginModal({ visible, onClose }: Props) {
   const handleOAuthLogin = async (provider: any) => {
-    const { error } = await supabase.auth.signIn({ provider });
+    const { error } = await signIn(provider);
     if (error) {
       // eslint-disable-next-line no-console
       console.log('Error: ', error.message);
     } else {
+      // upload unsubmitted results
       onClose();
     }
   };

@@ -1,6 +1,6 @@
 import { Menu } from 'antd';
 import { useContext, useState } from 'react';
-import { supabase } from '../lib/api';
+import { signOut } from '../lib/api';
 import { AppContext } from '../lib/contexts';
 import { AppActionKind } from '../lib/reducers';
 import LoginModal from './LoginModal';
@@ -11,7 +11,7 @@ function LoginLogoutMenuItem() {
   const closeModal = () => setIsModalVisible(false);
 
   const onLogout = async () => {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await signOut();
     if (error) {
       // eslint-disable-next-line no-console
       console.warn(`Error logging out: ${error}`);
