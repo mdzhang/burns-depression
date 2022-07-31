@@ -6,6 +6,7 @@ import {
 
 import LoginModal from '../../components/LoginModal';
 import { ApiQuizResult, QuizResult } from '../../lib/types';
+import { AppActionKind } from '../../lib/reducers';
 import { supabase } from '../../lib/api';
 import { AppContext } from '../../lib/contexts';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
@@ -23,11 +24,10 @@ const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((
 });
 
 function History() {
-  const [results, setResults] = useState<QuizResult[]>([]);
   const [showInfo, setShowInfo] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPopconfirmVisible, setShowDeleteConfirm] = useState(false);
-  const { user } = useContext(AppContext);
+  const { data: { user, results }, dispatch } = useContext(AppContext);
 
   const closeModal = () => setIsModalVisible(false);
 
@@ -41,7 +41,7 @@ function History() {
       // eslint-disable-next-line no-console
       console.warn('Error fetching results', error);
     } else {
-      setResults(processResults(data));
+      dispatch({ type: AppActionKind.LOAD_RESULTS, data: { results: processResults(data) } });
     }
   };
 
@@ -57,7 +57,7 @@ function History() {
       // eslint-disable-next-line no-console
       console.warn('Error deleting results', error);
     } else {
-      setResults([]);
+      dispatch({ type: AppActionKind.LOAD_RESULTS, data: { results: [] } });
     }
   };
 

@@ -1,12 +1,17 @@
-import { createContext } from 'react';
-import { User } from './types';
+import { createContext, Dispatch } from 'react';
+import { AppContext as AppContextType } from './types';
 
-interface AppContextInterface {
-  user: User | null;
+export interface AppContextInterface {
+  dispatch: Dispatch<any>;
+  data: AppContextType;
 }
 
-export const initialAppContext = {
-  user: null,
+export const initialAppContext: AppContextInterface = {
+  data: {
+    user: null,
+    results: [],
+  },
+  dispatch: () => {},
 };
 
 export const AppContext = createContext<AppContextInterface>(initialAppContext);

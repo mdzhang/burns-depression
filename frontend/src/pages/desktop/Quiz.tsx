@@ -18,7 +18,7 @@ function Quiz() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
   const navigate = useNavigate();
-  const { user } = useContext(AppContext);
+  const { data: { user } } = useContext(AppContext);
 
   const initialValues = questions
     .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});

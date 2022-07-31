@@ -24,3 +24,8 @@ export type QuizResult = {
   total: number;
   answers: { [key: string]: string };
 };
+
+export type AppContext = {
+  user: User | null;
+  results: QuizResult[];
+};

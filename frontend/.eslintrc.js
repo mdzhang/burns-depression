@@ -32,10 +32,11 @@ module.exports = {
     // no-unused-vars will misidentify TS types
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
-    // note you must disable the base rule as it can report incorrect errors
-    // for eslint ^7
+    // the following report incorrect errors for eslint ^7
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     camelcase: 'off',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
   },
 };

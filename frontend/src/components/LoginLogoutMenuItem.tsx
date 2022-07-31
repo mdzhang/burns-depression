@@ -7,7 +7,7 @@ import LoginModal from './LoginModal';
 function LoginLogoutMenuItem() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
-  const userCtx = useContext(AppContext);
+  const { data: { user } } = useContext(AppContext);
 
   const onLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -20,7 +20,7 @@ function LoginLogoutMenuItem() {
 
   return (
     <Menu.Item key="login-logout">
-      {userCtx.user ? (
+      {user ? (
         <a href="/logout" onClick={onLogout}>Logout</a>
       ) : (
         <a href="#" onClick={() => setIsModalVisible(true)}>Login</a>
