@@ -12,13 +12,13 @@ export async function signIn(provider: Provider): Promise<any> {
   return supabase.auth.signIn({ provider });
 }
 
-export async function saveResult(user: User, answers: QuizResult) {
-  const { data, error } = await supabase.from('quiz_results').insert([
-    {
-      user_id: user.id,
-      result: JSON.stringify(answers),
-    },
-  ]);
+export async function saveResults(user: User, results: QuizResult[]) {
+  const formatted = results.map((r) => ({
+    user_id: user.id,
+    result: JSON.stringify(r.answers),
+  }));
+
+  const { data, error } = await supabase.from('quiz_results').insert(formatted);
 
   if (error) {
     // eslint-disable-next-line no-console

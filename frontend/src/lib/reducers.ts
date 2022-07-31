@@ -24,7 +24,6 @@ export function appReducer(state: AppContext, action: AppAction): AppContext {
       return { ...state, results: action.data.results ?? [] };
     case AppActionKind.LOAD_USER:
       return { ...state, user: action.data.user ?? null };
-
     default:
       return state;
   }

@@ -14,8 +14,8 @@ import Quiz from './pages/Quiz';
 import History from './pages/History';
 import Topbar from './components/Topbar';
 
-import { supabase } from './lib/api';
-import { User } from './lib/types';
+import { supabase, saveResults } from './lib/api';
+import { User, QuizResult } from './lib/types';
 
 function App() {
   const localState = localStorage.getItem('app');
@@ -41,6 +41,21 @@ function App() {
       authListener?.unsubscribe();
     };
   }, [state.user]);
+
+  useEffect(() => {
+    const { user, results } = state;
+    const unsavedResults = results.filter((r: QuizResult) => !r.id);
+    if (!user || unsavedResults.length === 0) { return; }
+
+    const { data } = saveResults(user, unsavedResults);
+    console.log(data);
+    debugger;
+    const mergedResults = results;
+    reducerDispatch({
+      type: AppActionKind.LOAD_RESULTS,
+      data: { results: mergedResults },
+    });
+  }, []);
 
   return (
     <AppContext.Provider value={{ data: state, dispatch: reducerDispatch }}>

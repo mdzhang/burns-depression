@@ -8,9 +8,10 @@ import {
 import styles from './Quiz.module.css';
 import questions from '../data/questions.json';
 
-import { saveResult } from '../lib/api';
+import { saveResults } from '../lib/api';
 import { AppActionKind } from '../lib/reducers';
 import { AppContext } from '../lib/contexts';
+import { QuizResult } from '../lib/types';
 import { getScore, getLevelOfDepression } from '../utils/scoring';
 
 function Quiz() {
@@ -44,10 +45,16 @@ function Quiz() {
 
   const submitScore = async () => {
     const answers = form.getFieldsValue();
+    const total = getScore(answers);
 
     // store remotely if logged in
     if (user) {
-      await saveResult(user, answers);
+      const result: QuizResult = {
+        createdAt: DateTime.now(),
+        total,
+        answers,
+      };
+      await saveResults(user, [result]);
     } else {
       // add to reducer state which is cacahed in browser
       const result = {

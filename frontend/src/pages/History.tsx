@@ -41,7 +41,11 @@ function History() {
       // eslint-disable-next-line no-console
       console.warn('Error fetching results', error);
     } else {
-      dispatch({ type: AppActionKind.LOAD_RESULTS, data: { results: processResults(data) } });
+      const unsaved = results.filter((r) => !r.id);
+      dispatch({
+        type: AppActionKind.LOAD_RESULTS,
+        data: { results: [...unsaved, ...processResults(data)] },
+      });
     }
   };
 
@@ -100,11 +104,11 @@ function History() {
   return (
     <div>
       <div className="overflow-x-auto">
-        {showInfo && <Alert message="Login to see your history" type="info" showIcon onClick={() => setIsModalVisible(true)} />}
+        {showInfo && <Alert message={`Login to ${results.length > 0 ? 'save' : 'see'} your history`} type="info" showIcon onClick={() => setIsModalVisible(true)} />}
 
         <Table dataSource={data} columns={columns} />
 
-        {user && results.length > 0 && (
+        {results.length > 0 && (
           <Row>
             <Col xs={2} sm={4} md={6} lg={8} xl={10} />
             <Col xs={20} sm={16} md={12} lg={8} xl={4}>

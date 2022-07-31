@@ -13,7 +13,6 @@ function LoginModal({ visible, onClose }: Props) {
       // eslint-disable-next-line no-console
       console.log('Error: ', error.message);
     } else {
-      // upload unsubmitted results
       onClose();
     }
   };
