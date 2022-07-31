@@ -1,41 +1,45 @@
 import {
-  useMemo, useContext, useEffect, useReducer,
+  useReducer,
+
+  useEffect,
 } from 'react';
+
 import { Route, Routes } from 'react-router';
 import { BrowserRouter, Navigate } from 'react-router-dom';
+import { AppContext, initialAppContext } from './lib/contexts';
+import { appReducer, AppActionKind } from './lib/reducers';
 
 import Quiz from './pages/desktop/Quiz';
 import History from './pages/desktop/History';
 import Topbar from './components/Topbar';
 
 import { supabase } from './lib/api';
-import { AppContext, initialAppContext } from './lib/contexts';
-import { appReducer } from './lib/reducers';
+import { User } from './lib/types';
 
 function App() {
-  const appCtx = useContext(AppContext);
-  const [state, dispatch] = useReducer(appReducer, initialAppContext.data);
-  const providerValue = useMemo(() => ({ data: state, dispatch }), [appCtx.data]);
+  const [state, reducerDispatch] = useReducer(appReducer, initialAppContext.data);
+  const setUser = (u: User | undefined | null) => {
+    reducerDispatch({ type: AppActionKind.LOAD_USER, data: { user: u ?? null } });
+  };
 
   useEffect(() => {
     const session = supabase.auth.session();
-    appCtx.data.user = session?.user ?? null;
+    setUser(session?.user);
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, sess) => {
-        const currentUser = sess?.user;
-        appCtx.data.user = currentUser ?? null;
+        setUser(sess?.user);
       },
     );
 
     return () => {
       authListener?.unsubscribe();
     };
-  }, [appCtx.data.user]);
+  }, [state.user]);
 
   return (
-    <BrowserRouter>
-      <AppContext.Provider value={providerValue}>
+    <AppContext.Provider value={{ data: state, dispatch: reducerDispatch }}>
+      <BrowserRouter>
         <Topbar />
 
         <Routes>
@@ -49,8 +53,9 @@ function App() {
             element={<Navigate to="/take-quiz" replace />}
           />
         </Routes>
-      </AppContext.Provider>
-    </BrowserRouter>
+      </BrowserRouter>
+
+    </AppContext.Provider>
   );
 }
 

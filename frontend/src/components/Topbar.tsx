@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {
   Menu, Affix, Drawer,
@@ -9,6 +10,7 @@ import LoginLogoutMenuItem from './LoginLogoutMenuItem';
 import './Topbar.css';
 
 function Topbar() {
+  const navigate = useNavigate();
   const [showDrawer, setShowDrawer] = useState(false);
 
   return (
@@ -34,10 +36,10 @@ function Topbar() {
           >
             <Menu>
               <Menu.Item key="take-quiz">
-                <a href="/take-quiz">Take Quiz</a>
+                <a href="#" onClick={() => navigate('/take-quiz')}>Take Quiz</a>
               </Menu.Item>
               <Menu.Item key="history">
-                <a href="/history">History</a>
+                <a href="#" onClick={() => navigate('/history')}>History</a>
               </Menu.Item>
               <LoginLogoutMenuItem />
             </Menu>

@@ -32,6 +32,7 @@ module.exports = {
     // no-unused-vars will misidentify TS types
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
+    'react/jsx-no-constructed-context-values': 'off',
     // the following report incorrect errors for eslint ^7
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],

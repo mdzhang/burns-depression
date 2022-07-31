@@ -28,12 +28,21 @@ function History() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPopconfirmVisible, setShowDeleteConfirm] = useState(false);
   const { data: { user, results }, dispatch } = useContext(AppContext);
+  console.log('Existing results', results);
 
   const closeModal = () => setIsModalVisible(false);
 
   const getResults = async () => {
-    if (!user) { return; }
+    if (!user) {
+      console.log('No user; skip loading results');
+      return;
+    }
+    if (results.length !== 0) {
+      console.log('Already loaded results');
+      return;
+    }
 
+    console.log('Hitting API');
     const { data, error } = await supabase
       .from('quiz_results');
 
