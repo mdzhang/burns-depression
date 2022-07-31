@@ -36,5 +36,6 @@ module.exports = {
     // for eslint ^7
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
+    'camelcase': 'off',
   },
 };
