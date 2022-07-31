@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@capacitor/android": "^4.0.1",
     "@capacitor/core": "^4.0.1",
+    "@capacitor/ios": "^4.0.1",
     "@craco/craco": "^6.4.5",
     "@supabase/supabase-js": "^1.35.4",
     "@testing-library/jest-dom": "^5.16.4",
@@ -48,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@capacitor/cli": "^4.0.1",
     "@types/antd": "^1.0.0",
     "@types/jest": "^27.5.2",
     "@types/luxon": "^3.0.0",
