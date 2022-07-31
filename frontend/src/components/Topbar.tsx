@@ -1,19 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {
   Menu, Affix, Drawer,
 } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import { User } from '../lib/types';
 import LeftMenu from './LeftMenu';
 import RightMenu from './RightMenu';
 import LoginLogoutMenuItem from './LoginLogoutMenuItem';
 import './Topbar.css';
 
-interface Props {
-  user: User | null;
-}
-
-function Topbar({ user }: Props) {
+function Topbar() {
+  const navigate = useNavigate();
   const [showDrawer, setShowDrawer] = useState(false);
 
   return (
@@ -24,7 +21,7 @@ function Topbar({ user }: Props) {
             <LeftMenu />
           </div>
           <div className="menu_right">
-            <RightMenu user={user} />
+            <RightMenu />
           </div>
 
           <div className="menu_mobile-button">
@@ -39,12 +36,12 @@ function Topbar({ user }: Props) {
           >
             <Menu>
               <Menu.Item key="take-quiz">
-                <a href="/take-quiz">Take Quiz</a>
+                <a href="#" onClick={() => navigate('/take-quiz')}>Take Quiz</a>
               </Menu.Item>
               <Menu.Item key="history">
-                <a href="/history">History</a>
+                <a href="#" onClick={() => navigate('/history')}>History</a>
               </Menu.Item>
-              <LoginLogoutMenuItem user={user} />
+              <LoginLogoutMenuItem />
             </Menu>
           </Drawer>
         </div>

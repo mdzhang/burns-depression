@@ -1,13 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import { Menu } from 'antd';
 
 function LeftMenu() {
+  const navigate = useNavigate();
+
   return (
     <Menu mode="horizontal">
       <Menu.Item key="take-quiz">
-        <a href="/take-quiz">Take Quiz</a>
+        <a href="#" onClick={() => navigate('/take-quiz')}>Take Quiz</a>
       </Menu.Item>
       <Menu.Item key="history">
-        <a href="/history">History</a>
+        <a href="#" onClick={() => navigate('/history')}>History</a>
       </Menu.Item>
     </Menu>
   );

@@ -1,13 +1,12 @@
+import { useContext } from 'react';
 import { Menu } from 'antd';
-import { User } from '../lib/types';
 import LoginLogoutMenuItem from './LoginLogoutMenuItem';
+import { AppContext } from '../lib/contexts';
 import './RightMenu.css';
 
-interface Props {
-  user: User | null;
-}
+function RightMenu() {
+  const { data: { user } } = useContext(AppContext);
 
-function RightMenu({ user }: Props) {
   return (
     <Menu mode="horizontal">
       <div className="greeting">
@@ -15,7 +14,7 @@ function RightMenu({ user }: Props) {
         {' '}
         {user?.user_metadata?.full_name || 'stranger'}
       </div>
-      <LoginLogoutMenuItem user={user} />
+      <LoginLogoutMenuItem />
     </Menu>
   );
 }

@@ -1,15 +1,13 @@
 import { Menu } from 'antd';
-import { useState } from 'react';
-import { User } from '../lib/types';
+import { useContext, useState } from 'react';
 import { supabase } from '../lib/api';
+import { AppContext } from '../lib/contexts';
+import { AppActionKind } from '../lib/reducers';
 import LoginModal from './LoginModal';
 
-interface Props {
-  user: User | null;
-}
-
-function LoginLogoutMenuItem({ user }: Props) {
+function LoginLogoutMenuItem() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { data: { user }, dispatch } = useContext(AppContext);
   const closeModal = () => setIsModalVisible(false);
 
   const onLogout = async () => {
@@ -17,6 +15,8 @@ function LoginLogoutMenuItem({ user }: Props) {
     if (error) {
       // eslint-disable-next-line no-console
       console.warn(`Error logging out: ${error}`);
+    } else {
+      dispatch({ type: AppActionKind.LOGOUT });
     }
   };
 

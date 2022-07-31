@@ -1,18 +1,16 @@
 import { DateTime } from 'luxon';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Alert, Table, Col, Row, Button, Popconfirm,
 } from 'antd';
 
 import LoginModal from '../../components/LoginModal';
-import { ApiQuizResult, QuizResult, User } from '../../lib/types';
+import { ApiQuizResult, QuizResult } from '../../lib/types';
+import { AppActionKind } from '../../lib/reducers';
 import { supabase } from '../../lib/api';
+import { AppContext } from '../../lib/contexts';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
 import { isMobileBrowser } from '../../utils/device';
-
-interface Props {
-  user: User | null;
-}
 
 const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((r) => {
   const parsed = JSON.parse(r.result);
@@ -25,17 +23,26 @@ const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((
   } as QuizResult;
 });
 
-function History({ user }: Props) {
-  const [results, setResults] = useState<QuizResult[]>([]);
+function History() {
   const [showInfo, setShowInfo] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPopconfirmVisible, setShowDeleteConfirm] = useState(false);
+  const { data: { user, results }, dispatch } = useContext(AppContext);
+  console.log('Existing results', results);
 
   const closeModal = () => setIsModalVisible(false);
 
   const getResults = async () => {
-    if (!user) { return; }
+    if (!user) {
+      console.log('No user; skip loading results');
+      return;
+    }
+    if (results.length !== 0) {
+      console.log('Already loaded results');
+      return;
+    }
 
+    console.log('Hitting API');
     const { data, error } = await supabase
       .from('quiz_results');
 
@@ -43,7 +50,7 @@ function History({ user }: Props) {
       // eslint-disable-next-line no-console
       console.warn('Error fetching results', error);
     } else {
-      setResults(processResults(data));
+      dispatch({ type: AppActionKind.LOAD_RESULTS, data: { results: processResults(data) } });
     }
   };
 
@@ -59,7 +66,7 @@ function History({ user }: Props) {
       // eslint-disable-next-line no-console
       console.warn('Error deleting results', error);
     } else {
-      setResults([]);
+      dispatch({ type: AppActionKind.LOAD_RESULTS, data: { results: [] } });
     }
   };
 
