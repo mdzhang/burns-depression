@@ -1,18 +1,15 @@
 import { DateTime } from 'luxon';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Alert, Table, Col, Row, Button, Popconfirm,
 } from 'antd';
 
 import LoginModal from '../../components/LoginModal';
-import { ApiQuizResult, QuizResult, User } from '../../lib/types';
+import { ApiQuizResult, QuizResult } from '../../lib/types';
 import { supabase } from '../../lib/api';
+import { UserContext } from '../../lib/contexts';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
 import { isMobileBrowser } from '../../utils/device';
-
-interface Props {
-  user: User | null;
-}
 
 const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((r) => {
   const parsed = JSON.parse(r.result);
@@ -25,11 +22,12 @@ const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((
   } as QuizResult;
 });
 
-function History({ user }: Props) {
+function History() {
   const [results, setResults] = useState<QuizResult[]>([]);
   const [showInfo, setShowInfo] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPopconfirmVisible, setShowDeleteConfirm] = useState(false);
+  const { user } = useContext(UserContext);
 
   const closeModal = () => setIsModalVisible(false);
 

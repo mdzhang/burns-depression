@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Radio, Button, Form, Modal,
@@ -8,20 +8,17 @@ import styles from './Quiz.module.css';
 import questions from '../../data/questions.json';
 
 import { supabase } from '../../lib/api';
-import { User } from '../../lib/types';
+import { UserContext } from '../../lib/contexts';
 import { getScore, getLevelOfDepression } from '../../utils/scoring';
 
-interface Props {
-  user: User | null;
-}
-
-function Quiz({ user }: Props) {
+function Quiz() {
   const [levelOfDepression, setLevelOfDepression] = useState('');
   const [points, setPoints] = useState(0);
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   const initialValues = questions
     .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});

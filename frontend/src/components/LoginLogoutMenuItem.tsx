@@ -1,19 +1,17 @@
 import { Menu } from 'antd';
-import { useState } from 'react';
-import { User } from '../lib/types';
+import { useContext, useState } from 'react';
 import { supabase } from '../lib/api';
+import { UserContext } from '../lib/contexts';
 import LoginModal from './LoginModal';
 
-interface Props {
-  user: User | null;
-}
-
-function LoginLogoutMenuItem({ user }: Props) {
+function LoginLogoutMenuItem() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
+  const userCtx = useContext(UserContext);
 
   const onLogout = async () => {
     const { error } = await supabase.auth.signOut();
+    // TODO: dispatch to clear history
     if (error) {
       // eslint-disable-next-line no-console
       console.warn(`Error logging out: ${error}`);
@@ -22,7 +20,7 @@ function LoginLogoutMenuItem({ user }: Props) {
 
   return (
     <Menu.Item key="login-logout">
-      {user ? (
+      {userCtx.user ? (
         <a href="/logout" onClick={onLogout}>Logout</a>
       ) : (
         <a href="#" onClick={() => setIsModalVisible(true)}>Login</a>

@@ -3,17 +3,12 @@ import {
   Menu, Affix, Drawer,
 } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import { User } from '../lib/types';
 import LeftMenu from './LeftMenu';
 import RightMenu from './RightMenu';
 import LoginLogoutMenuItem from './LoginLogoutMenuItem';
 import './Topbar.css';
 
-interface Props {
-  user: User | null;
-}
-
-function Topbar({ user }: Props) {
+function Topbar() {
   const [showDrawer, setShowDrawer] = useState(false);
 
   return (
@@ -24,7 +19,7 @@ function Topbar({ user }: Props) {
             <LeftMenu />
           </div>
           <div className="menu_right">
-            <RightMenu user={user} />
+            <RightMenu />
           </div>
 
           <div className="menu_mobile-button">
@@ -44,7 +39,7 @@ function Topbar({ user }: Props) {
               <Menu.Item key="history">
                 <a href="/history">History</a>
               </Menu.Item>
-              <LoginLogoutMenuItem user={user} />
+              <LoginLogoutMenuItem />
             </Menu>
           </Drawer>
         </div>
