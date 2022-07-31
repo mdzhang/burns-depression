@@ -5,11 +5,11 @@ import {
 } from 'antd';
 
 import styles from './Quiz.module.css';
-import questions from '../../data/questions.json';
+import questions from '../data/questions.json';
 
-import { supabase } from '../../lib/api';
-import { AppContext } from '../../lib/contexts';
-import { getScore, getLevelOfDepression } from '../../utils/scoring';
+import { supabase } from '../lib/api';
+import { AppContext } from '../lib/contexts';
+import { getScore, getLevelOfDepression } from '../utils/scoring';
 
 function Quiz() {
   const [levelOfDepression, setLevelOfDepression] = useState('');

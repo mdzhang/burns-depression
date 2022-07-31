@@ -9,8 +9,8 @@ import { BrowserRouter, Navigate } from 'react-router-dom';
 import { AppContext, initialAppContext } from './lib/contexts';
 import { appReducer, AppActionKind } from './lib/reducers';
 
-import Quiz from './pages/desktop/Quiz';
-import History from './pages/desktop/History';
+import Quiz from './pages/Quiz';
+import History from './pages/History';
 import Topbar from './components/Topbar';
 
 import { supabase } from './lib/api';

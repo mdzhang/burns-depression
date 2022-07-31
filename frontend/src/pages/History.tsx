@@ -4,13 +4,13 @@ import {
   Alert, Table, Col, Row, Button, Popconfirm,
 } from 'antd';
 
-import LoginModal from '../../components/LoginModal';
-import { ApiQuizResult, QuizResult } from '../../lib/types';
-import { AppActionKind } from '../../lib/reducers';
-import { supabase } from '../../lib/api';
-import { AppContext } from '../../lib/contexts';
-import { getScore, getLevelOfDepression } from '../../utils/scoring';
-import { isMobileBrowser } from '../../utils/device';
+import LoginModal from '../components/LoginModal';
+import { ApiQuizResult, QuizResult } from '../lib/types';
+import { AppActionKind } from '../lib/reducers';
+import { supabase } from '../lib/api';
+import { AppContext } from '../lib/contexts';
+import { getScore, getLevelOfDepression } from '../utils/scoring';
+import { isMobileBrowser } from '../utils/device';
 
 const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((r) => {
   const parsed = JSON.parse(r.result);
@@ -28,21 +28,17 @@ function History() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPopconfirmVisible, setShowDeleteConfirm] = useState(false);
   const { data: { user, results }, dispatch } = useContext(AppContext);
-  console.log('Existing results', results);
 
   const closeModal = () => setIsModalVisible(false);
 
   const getResults = async () => {
     if (!user) {
-      console.log('No user; skip loading results');
       return;
     }
     if (results.length !== 0) {
-      console.log('Already loaded results');
       return;
     }
 
-    console.log('Hitting API');
     const { data, error } = await supabase
       .from('quiz_results');
 
