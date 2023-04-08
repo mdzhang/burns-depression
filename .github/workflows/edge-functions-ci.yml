@@ -1,4 +1,4 @@
-name: supabase edge functions
+name: [ci] supabase edge functions
 
 on:
   push:
