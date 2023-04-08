@@ -2,10 +2,7 @@
   "name": "backend",
   "version": "0.0.1",
   "description": "Site backend using supabase",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mdzhang/burns-depression.git"
@@ -16,7 +13,7 @@
     "supabase"
   ],
   "author": "m d zhang",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mdzhang/burns-depression/issues"
   },
