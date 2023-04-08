@@ -47,3 +47,7 @@ To hit: `make keepalive`
   $ npx supabase init
   $ npx supabase link --project-ref ndiwftxorygotvnblwbg
   ```
+1. Install `postgresql`
+  ```sh
+  $ brew install postgresql@15
+  ```
