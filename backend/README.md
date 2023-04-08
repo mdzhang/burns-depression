@@ -49,5 +49,5 @@ To hit: `make keepalive`
   ```
 1. Install `postgresql`
   ```sh
-  $ brew install postgresql@15
+  $ brew install deno postgresql@15
   ```

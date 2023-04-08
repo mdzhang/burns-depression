@@ -1,3 +1,7 @@
+-- schedule crons via pg_cron
+-- manually run @ https://app.supabase.com/project/ndiwftxorygotvnblwbg/sql
+-- ANON_KEY is the SUPABASE_ANON_KEY secret
+
 select
   cron.schedule(
     'invoke-keepalive-daily',
