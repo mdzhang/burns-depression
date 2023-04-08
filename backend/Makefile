@@ -8,4 +8,4 @@ keepalive:
 
 redump:
 	# limit to public schema, ignore privileges, dump schema only
-	pg_dump -s -x -h db.ndiwftxorygotvnblwbg.supabase.co -p 5432 -d postgres -U postgres --schema=public > schema.sql
+	pg_dump -s -x -h db.ndiwftxorygotvnblwbg.supabase.co -p 5432 -d postgres -U postgres --schema=public > supabase/database/schema.sql
