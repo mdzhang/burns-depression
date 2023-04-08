@@ -18,6 +18,8 @@ Oauth app Client ID and Secret are then added to the [supabase authentication se
 
 Supabase is also used for data storage.
 
+The [`pg_cron` extension](https://supabase.com/docs/guides/database/extensions/pgcron) is enabled.
+
 It can be explored using [Retool](https://retool.com/). See [here](https://amisad.retool.com/editor/56b73190-0e0b-11ed-bc13-9b7b1b94e78e).
 
 Retool is connected to Supabase using a Postgres connection and the connection string [here](https://app.supabase.com/project/ndiwftxorygotvnblwbg/settings/database).
