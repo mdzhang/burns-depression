@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/mdzhang/burns-depression/issues"
   },
-  "homepage": "https://github.com/mdzhang/burns-depression#readme"
+  "homepage": "https://github.com/mdzhang/burns-depression#readme",
+  "devDependencies": {
+    "supabase": "^1.49.4"
+  }
 }
