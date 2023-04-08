@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "0.0.1",
+  "description": "Site backend using supabase",
+  "scripts": {
+    "lint": "deno lint supabase/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdzhang/burns-depression.git"
+  },
+  "keywords": [
+    "burns",
+    "depression",
+    "supabase"
+  ],
+  "author": "m d zhang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mdzhang/burns-depression/issues"
+  },
+  "homepage": "https://github.com/mdzhang/burns-depression#readme",
+  "devDependencies": {
+    "supabase": "^1.49.4"
+  }
+}

@@ -21,3 +21,33 @@ Supabase is also used for data storage.
 It can be explored using [Retool](https://retool.com/). See [here](https://amisad.retool.com/editor/56b73190-0e0b-11ed-bc13-9b7b1b94e78e).
 
 Retool is connected to Supabase using a Postgres connection and the connection string [here](https://app.supabase.com/project/ndiwftxorygotvnblwbg/settings/database).
+
+The [`pg_cron` extension](https://supabase.com/docs/guides/database/extensions/pgcron) is enabled. All scheduled crons are duplicated in [`cron.sql`](./cron.sql).
+
+## Secrets
+
+After setting up the CLI, you can see these:
+
+`$ npx supabase secrets list`
+
+## Edge Functions
+
+An edge function `keepalive` is used to ping the app so it is not automatically paused in the case of prolonged inactivity on the site. It is hit using a scheduled task via the database & `pg_cron`.
+
+To deploy: `make deploy`
+To hit: `make keepalive`
+  - before this, set your `BEARER_TOKEN` environment variable to the Supabase secret `SUPABASE_ANON_KEY` 's value
+
+## Development
+
+1. Setup Supabase CLI
+  ```sh
+  $ npm install
+  $ npx supabase login
+  $ npx supabase init
+  $ npx supabase link --project-ref ndiwftxorygotvnblwbg
+  ```
+1. Install `postgresql`
+  ```sh
+  $ brew install deno postgresql@15
+  ```
