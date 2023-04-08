@@ -22,7 +22,7 @@ It can be explored using [Retool](https://retool.com/). See [here](https://amisa
 
 Retool is connected to Supabase using a Postgres connection and the connection string [here](https://app.supabase.com/project/ndiwftxorygotvnblwbg/settings/database).
 
-The [`pg_cron` extension](https://supabase.com/docs/guides/database/extensions/pgcron) is enabled.
+The [`pg_cron` extension](https://supabase.com/docs/guides/database/extensions/pgcron) is enabled. All scheduled crons are duplicated in [`cron.sql`](./cron.sql).
 
 ## Secrets
 
