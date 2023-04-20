@@ -1,136 +1,30 @@
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   Radio, Button, Form, Modal,
 } from 'antd';
-
 import styles from './Quiz.module.css';
+import useSubmitScore from '../hooks/useSubmitScore';
 import questions from '../data/questions.json';
 
-import { supabase } from '../lib/api';
-import { AppContext } from '../lib/contexts';
-import { getScore, getLevelOfDepression } from '../utils/scoring';
-
-function Quiz() {
-  const [levelOfDepression, setLevelOfDepression] = useState('');
-  const [points, setPoints] = useState(0);
-  const [form] = Form.useForm();
+function QuizCongrats() {
+  const form = Form.useFormInstance();
+  const { levelOfDepression, total } = useSubmitScore();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
   const navigate = useNavigate();
-  const { data: { user } } = useContext(AppContext);
 
-  const initialValues = questions
-    .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});
-
-  const updatePoints = async () => {
-    const model = form.getFieldsValue();
-    const total = getScore(model);
-
-    setPoints(total);
-
-    const level = getLevelOfDepression(total);
-    if (level) {
-      setLevelOfDepression(level);
-    } else {
-      // eslint-disable-next-line no-console
-      console.warn(`Could not find matching range for total: ${total}`);
-    }
-
-    return total;
-  };
-
-  const submitScore = async () => {
-    const answers = form.getFieldsValue();
-    const total = updatePoints();
-
-    // store locally
-    const date = new Date(Date.now()).toISOString().slice(0, 10);
-    const result = {
-      date,
-      raw: answers,
-      total,
-    };
-
-    window.localStorage.setItem(`result_${date}`, JSON.stringify(result));
-
-    // store remotely if logged in
-    if (user) {
-      const { data, error } = await supabase
-        .from('quiz_results')
-        .insert([
-          {
-            user_id: user.id,
-            result: JSON.stringify(answers),
-          },
-        ]);
-
-      if (error) {
-        // eslint-disable-next-line no-console
-        console.warn('Error saving results', error);
-      } else {
-        // eslint-disable-next-line no-console
-        console.info('Saved results', data);
-      }
-    }
+  const onClick = () => {
+    form.submit();
 
     setIsModalVisible(true);
   };
 
   return (
-    <main className={styles.main}>
-      <h1 className="text-3xl font-bold">
-        Take The Burns Depression Quiz
-      </h1>
+    <>
+      Congrats!
 
-      <p>
-        From
-        {' '}
-        <a href="https://feelinggood.com/">
-          Feeling Good: The New Mood Therapy, by
-          David D. Burns
-        </a>
-      </p>
-
-      <Form
-        layout="horizontal"
-        form={form}
-        labelCol={{ span: 14 }}
-        wrapperCol={{ span: 24 }}
-        labelAlign="left"
-        onValuesChange={updatePoints}
-        initialValues={initialValues}
-        onFinish={submitScore}
-        colon={false}
-        labelWrap
-      >
-        {questions.map((entry) => (
-          <div key={entry.category}>
-            <h2>
-              {entry.category}
-            </h2>
-
-            {entry.questions.map((question) => (
-              <Form.Item label={question} name={question} key={question}>
-                <Radio.Group>
-                  {
-                    [0, 1, 2, 3, 4]
-                      .map((num) => (
-                        <Radio.Button value={num} key={num}>
-                          {num}
-                        </Radio.Button>
-                      ))
-                  }
-                </Radio.Group>
-              </Form.Item>
-            ))}
-          </div>
-        ))}
-
-        <Form.Item label=" ">
-          <Button type="primary" htmlType="submit">See my results</Button>
-        </Form.Item>
-      </Form>
+      <Button type="primary" htmlType="submit" onClick={onClick}>See my results</Button>
 
       <Modal
         visible={isModalVisible}
@@ -150,18 +44,119 @@ function Quiz() {
           You scored
           {' '}
           <b>
-            { points }
+            { total }
           </b>
           .
           You
           {levelOfDepression === 'Normal but unhappy' ? ' are ' : ' have '}
           <b>
-            { levelOfDepression.toLowerCase() }
+            { levelOfDepression?.toLowerCase() }
             .
           </b>
         </div>
       </Modal>
+    </>
+  );
+}
+
+function QuizLanding() {
+  return (
+    <main className={styles.main}>
+      <h1 className="text-3xl font-bold">
+        Take The Burns Depression Quiz
+      </h1>
+
+      <p>
+        From
+        {' '}
+        <a href="https://feelinggood.com/">
+          Feeling Good: The New Mood Therapy, by
+          David D. Burns
+        </a>
+      </p>
+
+      <Link
+        to="/take-quiz?page=1"
+      >
+        <Button type="primary" htmlType="submit">Take Quiz</Button>
+      </Link>
     </main>
+  );
+}
+
+function Quiz() {
+  const [form] = Form.useForm();
+  const { page } = useParams();
+  const { answers, setAnswers, submitScore } = useSubmitScore();
+  const navigate = useNavigate();
+
+  const quizPage = Number(page);
+  const isFirstPage = quizPage === 1;
+  const isLastPage = quizPage === questions.length - 1;
+  const isResultPage = quizPage === questions.length;
+
+  useEffect(() => {
+    if (quizPage && quizPage > questions.length - 1) {
+      navigate('/take-quiz');
+    }
+  }, [quizPage]);
+
+  if (!quizPage) {
+    return <QuizLanding />;
+  }
+
+  if (isResultPage) {
+    return <QuizCongrats />;
+  }
+
+  const section = questions[quizPage];
+  const goToPage = (p: number) => {
+    navigate(`/take-quiz?page=${p}`);
+  };
+
+  return (
+    <>
+      <h2>
+        Answer the following questions according to ongoing feelings.
+      </h2>
+
+      <h3>
+        {section.category}
+      </h3>
+
+      <Form
+        layout="horizontal"
+        form={form}
+        labelCol={{ span: 14 }}
+        wrapperCol={{ span: 24 }}
+        labelAlign="left"
+        onValuesChange={setAnswers}
+        initialValues={answers}
+        onFinish={submitScore}
+        colon={false}
+        labelWrap
+      >
+        {section.questions.map((question) => (
+          <Form.Item label={question} name={question} key={question}>
+            <Radio.Group>
+              {
+                  [0, 1, 2, 3, 4]
+                    .map((num) => (
+                      <Radio.Button value={num} key={num}>
+                        {num}
+                      </Radio.Button>
+                    ))
+                }
+            </Radio.Group>
+          </Form.Item>
+        ))}
+
+        <Form.Item label=" ">
+          {!isFirstPage && <Button type="default" htmlType="submit" onClick={() => goToPage(quizPage - 1)}>Back</Button>}
+          {!isLastPage && <Button type="primary" htmlType="submit" onClick={() => goToPage(quizPage + 1)}>Next</Button>}
+        </Form.Item>
+      </Form>
+    </>
   );
 }
 
