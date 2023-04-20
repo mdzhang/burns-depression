@@ -9,7 +9,6 @@ import { AppContext, initialAppContext } from './lib/contexts';
 import { appReducer, AppActionKind } from './lib/reducers';
 
 import Quiz from './pages/Quiz';
-import QuizPage from './pages/QuizPage';
 import History from './pages/History';
 import Topbar from './components/Topbar';
 
@@ -44,14 +43,13 @@ function App() {
 
         <Routes>
           <Route path="take-quiz" element={<Quiz />} />
-          <Route path="take-quiz/:page" element={<QuizPage />} />
           <Route
             path="history"
             element={<History />}
           />
           <Route
             path="*"
-            element={<Navigate to="/take-quiz" replace />}
+            element={<Navigate to="take-quiz" replace />}
           />
         </Routes>
       </BrowserRouter>
