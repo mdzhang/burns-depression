@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import {
   Radio, Button, Form, Modal,
 } from 'antd';
@@ -9,12 +9,13 @@ import questions from '../data/questions.json';
 
 function QuizCongrats() {
   const form = Form.useFormInstance();
-  const { levelOfDepression, total } = useSubmitScore();
+  const { levelOfDepression, total, answers } = useSubmitScore();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
   const navigate = useNavigate();
 
   const onClick = () => {
+    console.log(answers);
     form.submit();
 
     setIsModalVisible(true);
@@ -86,17 +87,17 @@ function QuizLanding() {
 
 function Quiz() {
   const [form] = Form.useForm();
-  const { page } = useParams();
+  const { search } = useLocation();
+  const page = new URLSearchParams(search).get('page');
   const { answers, setAnswers, submitScore } = useSubmitScore();
   const navigate = useNavigate();
 
   const quizPage = Number(page);
   const isFirstPage = quizPage === 1;
-  const isLastPage = quizPage === questions.length - 1;
-  const isResultPage = quizPage === questions.length;
+  const isResultPage = quizPage === questions.length + 1;
 
   useEffect(() => {
-    if (quizPage && quizPage > questions.length - 1) {
+    if (quizPage && quizPage > questions.length + 1) {
       navigate('/take-quiz');
     }
   }, [quizPage]);
@@ -109,7 +110,7 @@ function Quiz() {
     return <QuizCongrats />;
   }
 
-  const section = questions[quizPage];
+  const section = questions[quizPage - 1];
   const goToPage = (p: number) => {
     navigate(`/take-quiz?page=${p}`);
   };
@@ -153,7 +154,7 @@ function Quiz() {
 
         <Form.Item label=" ">
           {!isFirstPage && <Button type="default" htmlType="submit" onClick={() => goToPage(quizPage - 1)}>Back</Button>}
-          {!isLastPage && <Button type="primary" htmlType="submit" onClick={() => goToPage(quizPage + 1)}>Next</Button>}
+          <Button type="primary" htmlType="submit" onClick={() => goToPage(quizPage + 1)}>Next</Button>
         </Form.Item>
       </Form>
     </>

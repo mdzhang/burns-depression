@@ -1,6 +1,6 @@
 import ranges from '../data/ranges.json';
 
-type AnswerValue = 0 | 1 | 2 | 3 | 4 | 5;
+type AnswerValue = '' | 0 | 1 | 2 | 3 | 4 | 5;
 export type Answers = { [key: string]: AnswerValue };
 
 /**
@@ -9,7 +9,7 @@ export type Answers = { [key: string]: AnswerValue };
  */
 export function getScore(answers: Answers) {
   return Object.values(answers)
-    .map((val) => (val === '' ? 0 : parseInt(val, 10)))
+    .map((val) => Number(val))
     .reduce((a, b) => a + b, 0);
 }
 
