@@ -14,6 +14,14 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['jest', 'react', '@typescript-eslint'],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        'no-undef': 'off',
+      },
+    },
+  ],
   rules: {
     // no longer needed w/ transformers
     'react/react-in-jsx-scope': 'off',

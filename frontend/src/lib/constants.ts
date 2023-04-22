@@ -5,10 +5,14 @@ export const {
 
 export const TOPBAR_HEIGHT = 54;
 
+interface AnswerLegendMap {
+  [key: string]: string;
+}
+
 export const ANSWER_LEGEND = {
   0: 'Not at all',
   1: 'Somewhat',
   2: 'Moderately',
   3: 'A lot',
   4: 'Extremely',
-};
+} as AnswerLegendMap;
