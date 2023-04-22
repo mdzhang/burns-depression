@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { supabase } from '../lib/api';
-import { AppContext } from '../lib/contexts';
-import { Answers } from '../lib/types';
-import { AppActionKind } from '../lib/reducers';
+import { supabase } from '@burns-depression/lib/api';
+import { AppContext } from '@burns-depression/lib/contexts';
+import { Answers } from '@burns-depression/lib/types';
+import { AppActionKind } from '@burns-depression/lib/reducers';
 
 export default function useSubmitScore() {
   const {

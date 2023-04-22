@@ -1,5 +1,5 @@
 import { Button, Modal } from 'antd';
-import { supabase } from '../lib/api';
+import { supabase } from '@burns-depression/lib/api';
 
 interface Props {
   visible: boolean;

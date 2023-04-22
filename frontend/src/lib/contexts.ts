@@ -1,7 +1,7 @@
 import { createContext, Dispatch } from 'react';
-import { AppContext as AppContextType } from './types';
-import questions from '../data/questions.json';
-import ranges from '../data/ranges.json';
+import { AppContext as AppContextType } from '@burns-depression/lib/types';
+import questions from '@burns-depression/data/questions.json';
+import ranges from '@burns-depression/data/ranges.json';
 
 const initialAnswers = questions
   .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});

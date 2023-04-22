@@ -1,5 +1,5 @@
-import ranges from '../data/ranges.json';
-import { Answers } from '../lib/types';
+import ranges from '@burns-depression/data/ranges.json';
+import { Answers } from '@burns-depression/lib/types';
 
 /**
  * Score the answers object that has quiz questions as keys
