@@ -1,4 +1,9 @@
-import { CSSProperties, useEffect, useState } from 'react';
+import {
+  CSSProperties,
+  useEffect,
+  useState,
+  useRef,
+} from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import {
   Card, Radio, Button, Form, Modal,
@@ -96,10 +101,23 @@ function Quiz() {
   const page = new URLSearchParams(search).get('page');
   const { answers, updateAnswers } = useSubmitScore();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const quizPage = Number(page);
   const isFirstPage = quizPage === 1;
   const isResultPage = quizPage === questions.length + 1;
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef && containerRef.current) {
+      window.scrollTo({
+        top: containerRef.current.offsetTop,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
+  }, [location]);
 
   useEffect(() => {
     if (quizPage && quizPage > questions.length + 1) {
@@ -129,7 +147,7 @@ function Quiz() {
       : 'You’re doing great! Keep it up!';
 
   return (
-    <div style={CardContainerStyle} className="quiz_section-card-container">
+    <div style={CardContainerStyle} className="quiz_section-card-container" ref={containerRef}>
       <h2 style={{ padding: '0 24px' }}>
         {header}
       </h2>
