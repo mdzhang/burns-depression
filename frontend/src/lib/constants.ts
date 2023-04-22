@@ -1,7 +1,7 @@
 export const {
   REACT_APP_SUPABASE_URL = 'unknown',
   REACT_APP_SUPABASE_KEY = 'unknown',
-} = process.env;
+} = import.meta.env;
 
 export const TOPBAR_HEIGHT = 54;
 
