@@ -4,9 +4,9 @@ import {
   Menu, Affix, Drawer,
 } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import LeftMenu from './LeftMenu';
-import RightMenu from './RightMenu';
-import LoginLogoutMenuItem from './LoginLogoutMenuItem';
+import LeftMenu from '@burns-depression/components/LeftMenu';
+import RightMenu from '@burns-depression/components/RightMenu';
+import LoginLogoutMenuItem from '@burns-depression/components/LoginLogoutMenuItem';
 import './Topbar.css';
 
 function Topbar() {

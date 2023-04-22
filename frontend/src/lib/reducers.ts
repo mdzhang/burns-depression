@@ -1,8 +1,8 @@
 import {
   Answers, User, QuizResult, AppContext,
-} from './types';
-import { initialAppContext } from './contexts';
-import { getScore, getLevelOfDepression } from '../utils/scoring';
+} from '@burns-depression/lib/types';
+import { initialAppContext } from '@burns-depression/lib/contexts';
+import { getScore, getLevelOfDepression } from '@burns-depression/utils/scoring';
 
 export enum AppActionKind {
   LOGOUT = 'LOGOUT',

@@ -4,13 +4,13 @@ import {
   Alert, Table, Col, Row, Button, Popconfirm,
 } from 'antd';
 
-import LoginModal from '../components/LoginModal';
-import { ApiQuizResult, QuizResult } from '../lib/types';
-import { AppActionKind } from '../lib/reducers';
-import { supabase } from '../lib/api';
-import { AppContext } from '../lib/contexts';
-import { getScore, getLevelOfDepression } from '../utils/scoring';
-import { isMobileBrowser } from '../utils/device';
+import LoginModal from '@burns-depression/components/LoginModal';
+import { ApiQuizResult, QuizResult } from '@burns-depression/lib/types';
+import { AppActionKind } from '@burns-depression/lib/reducers';
+import { supabase } from '@burns-depression/lib/api';
+import { AppContext } from '@burns-depression/lib/contexts';
+import { getScore, getLevelOfDepression } from '@burns-depression/utils/scoring';
+import { isMobileBrowser } from '@burns-depression/utils/device';
 
 const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((r) => {
   const parsed = JSON.parse(r.result);

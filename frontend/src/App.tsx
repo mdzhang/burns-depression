@@ -5,15 +5,15 @@ import {
 
 import { Route, Routes } from 'react-router';
 import { BrowserRouter, Navigate } from 'react-router-dom';
-import { AppContext, initialAppContext } from './lib/contexts';
-import { appReducer, AppActionKind } from './lib/reducers';
+import { AppContext, initialAppContext } from '@burns-depression/lib/contexts';
+import { appReducer, AppActionKind } from '@burns-depression/lib/reducers';
 
-import Quiz from './pages/Quiz';
-import History from './pages/History';
-import Topbar from './components/Topbar';
+import Quiz from '@burns-depression/pages/Quiz';
+import History from '@burns-depression/pages/History';
+import Topbar from '@burns-depression/components/Topbar';
 
-import { supabase } from './lib/api';
-import { User } from './lib/types';
+import { supabase } from '@burns-depression/lib/api';
+import { User } from '@burns-depression/lib/types';
 
 function App() {
   const [state, reducerDispatch] = useReducer(appReducer, initialAppContext.data);

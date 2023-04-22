@@ -6,7 +6,11 @@
       "dom.iterable",
       "esnext"
     ],
+    "paths": {
+      "@burns-depression/*": ["./src/*"]
+    },
     "allowJs": true,
+    "baseUrl": ".",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -21,6 +25,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src/**/*",
+    "@types/**/*"
   ]
 }
