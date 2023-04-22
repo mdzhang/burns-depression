@@ -12,11 +12,3 @@ export const ANSWER_LEGEND = {
   3: 'A lot',
   4: 'Extremely',
 };
-
-export const FROG_COLORS = {
-  0: '#FF6E65',
-  1: '#75C9FF',
-  3: '#FFE482',
-  4: '#FCAC4D',
-  5: '#FF6E65',
-};
