@@ -1,10 +1,14 @@
-import { User, QuizResult, AppContext } from './types';
+import {
+  Answers, User, QuizResult, AppContext,
+} from './types';
 import { initialAppContext } from './contexts';
+import { getScore, getLevelOfDepression } from '../utils/scoring';
 
 export enum AppActionKind {
   LOGOUT = 'LOGOUT',
   LOAD_RESULTS = 'LOAD_RESULTS',
   LOAD_USER = 'LOAD_USER',
+  UPDATE_CURRENT_ANSWERS = 'UPDATE_CURRENT_ANSWERS',
 }
 
 interface AppAction {
@@ -13,6 +17,9 @@ interface AppAction {
   data: {
     user?: User | null;
     results?: QuizResult[];
+    currentAnswers?: Answers,
+    currentLevelOfDepression?: string,
+    currentTotal?: number,
   };
 }
 
@@ -24,7 +31,25 @@ export function appReducer(state: AppContext, action: AppAction): AppContext {
       return { ...state, results: action.data.results ?? [] };
     case AppActionKind.LOAD_USER:
       return { ...state, user: action.data.user ?? null };
+    case AppActionKind.UPDATE_CURRENT_ANSWERS: {
+      const answers = {
+        ...state.currentAnswers,
+        ...action.data.currentAnswers,
+      };
+      const newTotal = getScore(answers);
+      const newLevel = getLevelOfDepression(newTotal);
+      console.log('UPDATE_CURRENT_ANSWERS', answers, newTotal, newLevel);
 
+      return {
+        ...state,
+        currentLevelOfDepression: newLevel,
+        currentTotal: newTotal,
+        currentAnswers: {
+          ...state.currentAnswers,
+          ...action.data.currentAnswers,
+        },
+      };
+    }
     default:
       return state;
   }

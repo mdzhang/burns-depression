@@ -13,6 +13,11 @@ function Topbar() {
   const navigate = useNavigate();
   const [showDrawer, setShowDrawer] = useState(false);
 
+  const goToPage = (page: string) => {
+    navigate(page);
+    setShowDrawer(false);
+  };
+
   return (
     <Affix>
       <nav className="menu">
@@ -32,14 +37,14 @@ function Topbar() {
             title="Menu"
             placement="right"
             onClose={() => setShowDrawer(false)}
-            visible={showDrawer}
+            open={showDrawer}
           >
-            <Menu>
+            <Menu style={{ border: 'none' }}>
               <Menu.Item key="take-quiz">
-                <a href="#" onClick={() => navigate('/take-quiz')}>Take Quiz</a>
+                <a href="#" onClick={() => goToPage('/take-quiz?page=1')}>Take Quiz</a>
               </Menu.Item>
               <Menu.Item key="history">
-                <a href="#" onClick={() => navigate('/history')}>History</a>
+                <a href="#" onClick={() => goToPage('/history')}>History</a>
               </Menu.Item>
               <LoginLogoutMenuItem />
             </Menu>

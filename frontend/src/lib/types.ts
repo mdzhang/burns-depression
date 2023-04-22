@@ -1,5 +1,8 @@
 import { DateTime } from 'luxon';
 
+type AnswerValue = '' | 0 | 1 | 2 | 3 | 4 | 5;
+export type Answers = { [key: string]: AnswerValue };
+
 export type UserMetadata = {
   full_name?: string;
 };
@@ -22,10 +25,13 @@ export type QuizResult = {
   uid: string; // UUID
   createdAt: DateTime;
   total: number;
-  answers: { [key: string]: string };
+  answers: Answers;
 };
 
 export type AppContext = {
   user: User | null;
   results: QuizResult[];
+  currentAnswers: Answers;
+  currentLevelOfDepression: string;
+  currentTotal: number;
 };
