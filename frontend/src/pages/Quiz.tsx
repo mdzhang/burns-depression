@@ -3,7 +3,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import {
   Card, Radio, Button, Form, Modal,
 } from 'antd';
-import styles from './Quiz.module.css';
+import './Quiz.css';
 import useSubmitScore from '../hooks/useSubmitScore';
 import questions from '../data/questions.json';
 
@@ -11,7 +11,6 @@ const CardContainerStyle: CSSProperties = {
   flexDirection: 'column',
   display: 'flex',
   alignItems: 'center',
-  marginTop: '60px',
 };
 
 function QuizCongrats() {
@@ -68,7 +67,7 @@ function QuizCongrats() {
 
 function QuizLanding() {
   return (
-    <main className={styles.main}>
+    <main className="main">
       <h1 className="text-3xl font-bold">
         Take The Burns Depression Quiz
       </h1>
@@ -130,12 +129,12 @@ function Quiz() {
       : 'You’re doing great! Keep it up!';
 
   return (
-    <div style={CardContainerStyle}>
-      <h2>
+    <div style={CardContainerStyle} className="quiz_section-card-container">
+      <h2 style={{ padding: '0 24px' }}>
         {header}
       </h2>
 
-      <Card title={title} style={{ width: 600 }}>
+      <Card title={title} className="quiz_section-card">
         <Form
           layout="horizontal"
           form={form}
