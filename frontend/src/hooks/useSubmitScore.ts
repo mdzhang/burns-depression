@@ -21,8 +21,6 @@ export default function useSubmitScore() {
   };
 
   const submitScore = async () => {
-    console.log('submitting', currentTotal, answers, currentLevelOfDepression);
-
     // store locally
     const date = new Date(Date.now()).toISOString().slice(0, 10);
     const result = {

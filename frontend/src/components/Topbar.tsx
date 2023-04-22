@@ -32,9 +32,9 @@ function Topbar() {
             title="Menu"
             placement="right"
             onClose={() => setShowDrawer(false)}
-            visible={showDrawer}
+            open={showDrawer}
           >
-            <Menu>
+            <Menu style={{ border: 'none' }}>
               <Menu.Item key="take-quiz">
                 <a href="#" onClick={() => navigate('/take-quiz')}>Take Quiz</a>
               </Menu.Item>

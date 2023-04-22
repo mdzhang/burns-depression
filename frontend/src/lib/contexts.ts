@@ -1,6 +1,7 @@
 import { createContext, Dispatch } from 'react';
 import { AppContext as AppContextType } from './types';
 import questions from '../data/questions.json';
+import ranges from '../data/ranges.json';
 
 const initialAnswers = questions
   .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});
@@ -15,7 +16,7 @@ export const initialAppContext: AppContextInterface = {
     user: null,
     results: [],
     currentAnswers: initialAnswers,
-    currentLevelOfDepression: '',
+    currentLevelOfDepression: ranges[0].result,
     currentTotal: 0,
   },
   dispatch: () => {},
