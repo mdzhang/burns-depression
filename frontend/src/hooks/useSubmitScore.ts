@@ -1,32 +1,34 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { supabase } from '../lib/api';
 import { AppContext } from '../lib/contexts';
-import { Answers, getScore, getLevelOfDepression } from '../utils/scoring';
-import questions from '../data/questions.json';
+import { Answers } from '../lib/types';
+import { AppActionKind } from '../lib/reducers';
 
 export default function useSubmitScore() {
-  const { data: { user } } = useContext(AppContext);
-  const [total, setTotal] = useState<number>(0);
-  const [levelOfDepression, setLevelOfDepression] = useState<string | undefined>(undefined);
+  const {
+    data: {
+      user,
+      currentAnswers,
+      currentTotal,
+      currentLevelOfDepression,
+    },
+    dispatch,
+  } = useContext(AppContext);
+  const answers = currentAnswers;
 
-  const initialAnswers = questions
-    .map((c) => c.questions).flat().reduce((a, v) => ({ ...a, [v]: 0 }), {});
-
-  const [answers, setAnswers] = useState<Answers>(initialAnswers);
+  const updateAnswers = (newAnswers: Answers) => {
+    dispatch({ type: AppActionKind.UPDATE_CURRENT_ANSWERS, data: { currentAnswers: newAnswers } });
+  };
 
   const submitScore = async () => {
-    const newTotal = getScore(answers);
-    setTotal(newTotal);
-
-    const newLevel = getLevelOfDepression(newTotal);
-    setLevelOfDepression(newLevel);
+    console.log('submitting', currentTotal, answers, currentLevelOfDepression);
 
     // store locally
     const date = new Date(Date.now()).toISOString().slice(0, 10);
     const result = {
       date,
       raw: answers,
-      total: newTotal,
+      total: currentTotal,
     };
 
     window.localStorage.setItem(`result_${date}`, JSON.stringify(result));
@@ -53,9 +55,9 @@ export default function useSubmitScore() {
   };
   return {
     submitScore,
-    total,
+    total: currentTotal,
     answers,
-    setAnswers,
-    levelOfDepression,
+    updateAnswers,
+    levelOfDepression: currentLevelOfDepression,
   };
 }

@@ -1,34 +1,40 @@
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import {
-  Radio, Button, Form, Modal,
+  Card, Radio, Button, Form, Modal,
 } from 'antd';
 import styles from './Quiz.module.css';
 import useSubmitScore from '../hooks/useSubmitScore';
 import questions from '../data/questions.json';
 
+const CardContainerStyle: CSSProperties = {
+  flexDirection: 'column',
+  display: 'flex',
+  alignItems: 'center',
+  marginTop: '60px',
+};
+
 function QuizCongrats() {
-  const form = Form.useFormInstance();
-  const { levelOfDepression, total, answers } = useSubmitScore();
+  const navigate = useNavigate();
+  const { submitScore, levelOfDepression, total } = useSubmitScore();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
-  const navigate = useNavigate();
 
   const onClick = () => {
-    console.log(answers);
-    form.submit();
-
+    submitScore();
     setIsModalVisible(true);
   };
 
   return (
-    <>
-      Congrats!
+    <div style={CardContainerStyle}>
+      <h2>
+        Congrats!
+      </h2>
 
       <Button type="primary" htmlType="submit" onClick={onClick}>See my results</Button>
 
       <Modal
-        visible={isModalVisible}
+        open={isModalVisible}
         title="Results"
         onOk={closeModal}
         onCancel={closeModal}
@@ -56,7 +62,7 @@ function QuizCongrats() {
           </b>
         </div>
       </Modal>
-    </>
+    </div>
   );
 }
 
@@ -89,7 +95,7 @@ function Quiz() {
   const [form] = Form.useForm();
   const { search } = useLocation();
   const page = new URLSearchParams(search).get('page');
-  const { answers, setAnswers, submitScore } = useSubmitScore();
+  const { answers, updateAnswers } = useSubmitScore();
   const navigate = useNavigate();
 
   const quizPage = Number(page);
@@ -114,50 +120,55 @@ function Quiz() {
   const goToPage = (p: number) => {
     navigate(`/take-quiz?page=${p}`);
   };
+  const title = `${section.category} (${quizPage}/${questions.length})`;
+
+  // eslint-disable-next-line no-nested-ternary
+  const header = quizPage > questions.length / 2
+    ? 'You’re almost there! just a few more questions and you’re done!'
+    : quizPage === 1
+      ? 'Answer the following questions according to ongoing feelings.'
+      : 'You’re doing great! Keep it up!';
 
   return (
-    <>
+    <div style={CardContainerStyle}>
       <h2>
-        Answer the following questions according to ongoing feelings.
+        {header}
       </h2>
 
-      <h3>
-        {section.category}
-      </h3>
+      <Card title={title} style={{ width: 600 }}>
+        <Form
+          layout="horizontal"
+          form={form}
+          labelCol={{ span: 14 }}
+          wrapperCol={{ span: 24 }}
+          labelAlign="left"
+          onValuesChange={updateAnswers}
+          initialValues={answers}
+          colon={false}
+          labelWrap
+        >
+          {section.questions.map((question) => (
+            <Form.Item label={question} name={question} key={question}>
+              <Radio.Group>
+                {
+                    [0, 1, 2, 3, 4]
+                      .map((num) => (
+                        <Radio.Button value={num} key={num}>
+                          {num}
+                        </Radio.Button>
+                      ))
+                  }
+              </Radio.Group>
+            </Form.Item>
+          ))}
 
-      <Form
-        layout="horizontal"
-        form={form}
-        labelCol={{ span: 14 }}
-        wrapperCol={{ span: 24 }}
-        labelAlign="left"
-        onValuesChange={setAnswers}
-        initialValues={answers}
-        onFinish={submitScore}
-        colon={false}
-        labelWrap
-      >
-        {section.questions.map((question) => (
-          <Form.Item label={question} name={question} key={question}>
-            <Radio.Group>
-              {
-                  [0, 1, 2, 3, 4]
-                    .map((num) => (
-                      <Radio.Button value={num} key={num}>
-                        {num}
-                      </Radio.Button>
-                    ))
-                }
-            </Radio.Group>
+          <Form.Item label=" ">
+            {!isFirstPage && (<Button type="default" onClick={() => goToPage(quizPage - 1)}>Back</Button>)}
+            <Button type="primary" onClick={() => goToPage(quizPage + 1)}>Next</Button>
           </Form.Item>
-        ))}
-
-        <Form.Item label=" ">
-          {!isFirstPage && <Button type="default" htmlType="submit" onClick={() => goToPage(quizPage - 1)}>Back</Button>}
-          <Button type="primary" htmlType="submit" onClick={() => goToPage(quizPage + 1)}>Next</Button>
-        </Form.Item>
-      </Form>
-    </>
+        </Form>
+      </Card>
+    </div>
   );
 }
 

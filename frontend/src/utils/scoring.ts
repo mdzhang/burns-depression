@@ -1,7 +1,5 @@
 import ranges from '../data/ranges.json';
-
-type AnswerValue = '' | 0 | 1 | 2 | 3 | 4 | 5;
-export type Answers = { [key: string]: AnswerValue };
+import { Answers } from '../lib/types';
 
 /**
  * Score the answers object that has quiz questions as keys
@@ -15,5 +13,5 @@ export function getScore(answers: Answers) {
 
 export function getLevelOfDepression(score: number) {
   const range = ranges.find((r) => score >= r.min && score <= r.max);
-  return range?.result;
+  return range?.result || ranges[0].result;
 }
