@@ -9,6 +9,7 @@ import {
   Card, Radio, Button, Form, Modal,
 } from 'antd';
 import './Quiz.css';
+import { TOPBAR_HEIGHT } from '../lib/constants';
 import useSubmitScore from '../hooks/useSubmitScore';
 import questions from '../data/questions.json';
 
@@ -112,7 +113,7 @@ function Quiz() {
   useEffect(() => {
     if (containerRef && containerRef.current) {
       window.scrollTo({
-        top: containerRef.current.offsetTop,
+        top: containerRef.current.offsetTop - TOPBAR_HEIGHT,
         left: 0,
         behavior: 'smooth',
       });
