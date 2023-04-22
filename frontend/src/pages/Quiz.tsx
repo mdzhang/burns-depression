@@ -6,12 +6,13 @@ import {
 } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import {
-  Card, Radio, Button, Form, Modal,
+  Card, Radio, Button, Form, Modal, Col, Row
 } from 'antd';
 import './Quiz.css';
-import { TOPBAR_HEIGHT } from '../lib/constants';
-import useSubmitScore from '../hooks/useSubmitScore';
-import questions from '../data/questions.json';
+import { TOPBAR_HEIGHT, ANSWER_LEGEND } from '@burns-depression/lib/constants';
+import { FROG_IMAGES, FROG_COLORS } from '@burns-depression/lib/frogs';
+import useSubmitScore from '@burns-depression/hooks/useSubmitScore';
+import questions from '@burns-depression/data/questions.json';
 
 const CardContainerStyle: CSSProperties = {
   flexDirection: 'column',
@@ -86,6 +87,38 @@ function QuizLanding() {
           David D. Burns
         </a>
       </p>
+
+      <h4>
+        Questions will use the following answer scale:
+      </h4>
+
+      <div style={{ display: 'flex', flexDirection: 'row', gap: '24px' }}>
+        {Object.entries(FROG_IMAGES).map(([ix, cmp]) => (
+          <div
+            style={{
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
+            }}
+          >
+            {cmp}
+            <div
+              style={{
+                border: '2px solid black',
+                borderRadius: '8px',
+                backgroundColor: `${FROG_COLORS[ix]}`,
+                padding: '2px 4px',
+              }}
+            >
+              <b>
+                {ix}
+                {' '}
+                -
+                {' '}
+                {ANSWER_LEGEND[ix]}
+              </b>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <Link
         to="/take-quiz?page=1"

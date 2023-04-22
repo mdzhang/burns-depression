@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Menu } from 'antd';
-import LoginLogoutMenuItem from './LoginLogoutMenuItem';
-import { AppContext } from '../lib/contexts';
+import LoginLogoutMenuItem from '@burns-depression/components/LoginLogoutMenuItem';
+import { AppContext } from '@burns-depression/lib/contexts';
 import './RightMenu.css';
 
 function RightMenu() {
