@@ -105,7 +105,15 @@ function History() {
   return (
     <div>
       <div className="overflow-x-auto">
-        {showInfo && <Alert message="Login to see your history" type="info" showIcon onClick={() => setIsModalVisible(true)} />}
+        {showInfo && (
+          <Alert
+            message="Login to see your history"
+            type="info"
+            showIcon
+            onClick={() => setIsModalVisible(true)}
+            style={{ cursor: 'pointer' }}
+          />
+        )}
 
         <Table dataSource={data} columns={columns} />
 
