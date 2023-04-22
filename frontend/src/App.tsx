@@ -49,7 +49,7 @@ function App() {
           />
           <Route
             path="*"
-            element={<Navigate to="take-quiz" replace />}
+            element={<Navigate to="/take-quiz" replace />}
           />
         </Routes>
       </BrowserRouter>
