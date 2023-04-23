@@ -38,7 +38,6 @@ export function appReducer(state: AppContext, action: AppAction): AppContext {
       };
       const newTotal = getScore(answers);
       const newLevel = getLevelOfDepression(newTotal);
-      console.log('UPDATE_CURRENT_ANSWERS', answers, newTotal, newLevel);
 
       return {
         ...state,
