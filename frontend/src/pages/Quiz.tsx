@@ -9,8 +9,7 @@ import {
   Card, Radio, Button, Form, Modal,
 } from 'antd';
 import './Quiz.css';
-import { TOPBAR_HEIGHT, ANSWER_LEGEND } from '@burns-depression/lib/constants';
-import { FROG_IMAGES } from '@burns-depression/lib/frogs';
+import { TOPBAR_HEIGHT } from '@burns-depression/lib/constants';
 import useSubmitScore from '@burns-depression/hooks/useSubmitScore';
 import questions from '@burns-depression/data/questions.json';
 
@@ -87,13 +86,6 @@ function QuizLanding() {
           David D. Burns
         </a>
       </p>
-
-      {Object.entries(FROG_IMAGES).map(([val, cmp]) => (
-        <>
-          {val}
-          {cmp}
-        </>
-      ))}
 
       <Link
         to="/take-quiz?page=1"
