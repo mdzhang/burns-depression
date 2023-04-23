@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@craco/craco": "^7.1.0",
     "@supabase/supabase-js": "^1.35.4",
     "@svgr/webpack": "^7.0.0",
     "@testing-library/jest-dom": "^5.16.4",
@@ -33,7 +32,7 @@
     "build": "tsc && vite build",
     "lint": "eslint './**/*.{ts,tsx}'",
     "lint-fix": "eslint --fix './**/*.{ts,tsx}'",
-    "test": "craco test"
+    "test": "jest test src"
   },
   "eslintConfig": {
     "extends": [
@@ -69,6 +68,7 @@
     "eslint-plugin-n": "*",
     "eslint-plugin-promise": "*",
     "eslint-plugin-react": "*",
+    "jest": "^29.5.0",
     "typescript": "^5.0.4"
   }
 }
