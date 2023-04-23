@@ -6,7 +6,9 @@ The domain is purchased through Amazon's AWS Route53. [Terraform](https://www.te
 
 <https://amisad.com/take-quiz> is setup to point to a site deployed using [Vercel](https://vercel.com/), on the [`burns-depression`](https://vercel.com/mdzhang/burns-depression) project.
 
-The Vercel [Github](https://vercel.com/docs/concepts/git/vercel-for-github) integration is used to update <amisad.com> each time the `main` branch is updated.
+The Vercel [Github](https://vercel.com/docs/concepts/git/vercel-for-github) integration is used to update <https://amisad.com> each time the `main` branch is updated.
+
+Additional [backend](../backend/README.md) resource setup is done via Supabase.
 
 ## Setup
 
