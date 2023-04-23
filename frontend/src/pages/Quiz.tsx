@@ -9,9 +9,9 @@ import {
   Card, Radio, Button, Form, Modal,
 } from 'antd';
 import './Quiz.css';
-import { TOPBAR_HEIGHT } from '../lib/constants';
-import useSubmitScore from '../hooks/useSubmitScore';
-import questions from '../data/questions.json';
+import { TOPBAR_HEIGHT } from '@burns-depression/lib/constants';
+import useSubmitScore from '@burns-depression/hooks/useSubmitScore';
+import questions from '@burns-depression/data/questions.json';
 
 const CardContainerStyle: CSSProperties = {
   flexDirection: 'column',

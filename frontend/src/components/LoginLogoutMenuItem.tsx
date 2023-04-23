@@ -1,9 +1,9 @@
 import { Menu } from 'antd';
 import { useContext, useState } from 'react';
-import { supabase } from '../lib/api';
-import { AppContext } from '../lib/contexts';
-import { AppActionKind } from '../lib/reducers';
-import LoginModal from './LoginModal';
+import { supabase } from '@burns-depression/lib/api';
+import { AppContext } from '@burns-depression/lib/contexts';
+import { AppActionKind } from '@burns-depression/lib/reducers';
+import LoginModal from '@burns-depression/components/LoginModal';
 
 function LoginLogoutMenuItem() {
   const [isModalVisible, setIsModalVisible] = useState(false);
