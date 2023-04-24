@@ -1,6 +1,6 @@
 # Mobile
 
-The mobile app is build using React Native and Expo.
+The mobile app is built using [React Native](https://reactnative.dev/) and [Expo](https://expo.dev/). It currently simply renders a `WebView` of the same app accessed via a mobile browser.
 
 ## Development
 
