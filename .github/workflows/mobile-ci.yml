@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    paths:
-      - 'mobile/**'
-      - '.github/workflows/mobile-ci.yml'
 
 jobs:
   build:
