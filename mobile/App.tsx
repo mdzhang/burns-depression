@@ -1,8 +1,9 @@
 import { WebView } from "react-native-webview";
 import Constants from "expo-constants";
 
-const uri = 'https://se-likes-folders-resort.trycloudflare.com';
-console.log(`URI is ${uri}`);
+const BASE_URL = process.env.BASE_URL;
+
+const uri = `https://${BASE_URL}`;
 
 export default function App() {
   return (
