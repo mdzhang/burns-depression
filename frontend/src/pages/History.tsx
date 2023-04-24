@@ -10,7 +10,7 @@ import { AppActionKind } from '@burns-depression/lib/reducers';
 import { supabase } from '@burns-depression/lib/api';
 import { AppContext } from '@burns-depression/lib/contexts';
 import { getScore, getLevelOfDepression } from '@burns-depression/utils/scoring';
-import { isMobileBrowser } from '@burns-depression/utils/device';
+import { isMobileApp, isMobileBrowser } from '@burns-depression/utils/device';
 
 const processResults = (results: ApiQuizResult[]): QuizResult[] => results.map((r) => {
   const parsed = JSON.parse(r.result);

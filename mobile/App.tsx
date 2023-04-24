@@ -8,6 +8,7 @@ export default function App() {
   return (
     <WebView
       source={{ uri }}
+      style={{ marginTop: 48 }}
     />
   );
 }

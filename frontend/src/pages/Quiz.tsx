@@ -12,6 +12,7 @@ import './Quiz.css';
 import { TOPBAR_HEIGHT } from '@burns-depression/lib/constants';
 import useSubmitScore from '@burns-depression/hooks/useSubmitScore';
 import questions from '@burns-depression/data/questions.json';
+import { isMobileApp } from '@burns-depression/utils/device';
 
 const CardContainerStyle: CSSProperties = {
   flexDirection: 'column',
