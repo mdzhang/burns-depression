@@ -1,4 +1,4 @@
-name: EAS build
+name: Expo build
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn install
 
-      - name: Setup EAS
+      - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest

@@ -12,7 +12,7 @@ The mobile app is built using [React Native](https://reactnative.dev/) and [Expo
   ```
 - Setup dotenv files
   ```sh
-  cp .env.example .env
+  cp .envrc.example .envrc
   # replace xxx with your tunnel's top level domain
   ```
 - Start Expo on your host with `yarn start`
