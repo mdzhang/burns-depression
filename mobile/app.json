@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "burns-depression",
+    "slug": "burns-depression",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.amisad"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.amisad"
+    },
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "012a3fa5-73c1-42b0-8c91-ab90e915051d"
+      }
+    },
+    "owner": "mdzhang"
+  }
+}

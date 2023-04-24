@@ -1,0 +1,32 @@
+version: '3.6'
+services:
+  # nginx container to accept local traffic and handle routing
+  nginx:
+    networks:
+      default:
+        aliases:
+          - dev.amisad.com
+    image: nginx:alpine
+    volumes:
+      - ./development/nginx:/etc/nginx
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - frontend
+    restart: always
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./frontend:/frontend
+      - frontend-node-modules:/frontend/node_modules
+    command: yarn start
+    restart: always
+
+# These get persisted but are not accessible from the host machine
+# Making them not sync to the host filesystem makes them much faster
+volumes:
+  frontend-node-modules:
