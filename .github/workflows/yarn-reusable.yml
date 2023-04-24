@@ -1,8 +1,11 @@
-name: frontend-reusable
+name: yarn-reusable
 
 on:
   workflow_call:
     inputs:
+      dir:
+        required: true
+        type: string
       cmd:
         required: true
         type: string
@@ -13,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: 'frontend'
+        working-directory: ${{ inputs.dir }}
 
     steps:
       - uses: actions/checkout@v3
