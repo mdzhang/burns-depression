@@ -13,10 +13,10 @@ See subdirectory READMEs.
 
 1. Edit `/etc/hosts` to have `127.0.0.1 dev.amisad.com`
 1. Start with docker:
-  ```sh
-  docker-compose up -d
-  ```
+    ```sh
+    docker-compose up -d
+    ```
 1. Go to <https://dev.amisad.com/>
 1. If <https://dev.amisad.com/>'s certificate is not trusted:
-  - run `open 'development/nginx/server.crt'`
-  - double click on certificate in Keychain Access and set "Trust" to "Always Trust"
+    - run `open 'development/nginx/server.crt'`
+    - double click on certificate in Keychain Access and set "Trust" to "Always Trust"
