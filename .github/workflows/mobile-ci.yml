@@ -1,4 +1,4 @@
-name: EAS build
+name: Expo build
 
 on:
   push:
@@ -8,6 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: mobile
+
     steps:
       - name: Setup repo
         uses: actions/checkout@v3
@@ -15,17 +20,30 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
-          cache: yarn
+          node-version: 18
 
-      - name: Setup EAS
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: 📦 Install dependencies
+        run: yarn install
+
+      - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: 📦 Install dependencies
-        run: yarn install
-
       - name: 🚀 Build app
-        run: eas build --non-interactive
+        run: eas build --non-interactive --platform=android
+        env:
+          REACT_APP_BASE_URL: amisad.com

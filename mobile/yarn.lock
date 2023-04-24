@@ -2129,6 +2129,11 @@ babel-plugin-syntax-trailing-function-commas@^7.0.0-beta.0:
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-trailing-function-commas/-/babel-plugin-syntax-trailing-function-commas-7.0.0-beta.0.tgz#aa213c1435e2bffeb6fca842287ef534ad05d5cf"
   integrity sha512-Xj9XuRuz3nTSbaTXWv3itLOcxyF4oPD8douBBmj7U9BBC6nEBYfyOJYQMf/8PJAFotC62UY5dFfIGEPr7WswzQ==
 
+babel-plugin-transform-inline-environment-variables@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-inline-environment-variables/-/babel-plugin-transform-inline-environment-variables-0.4.4.tgz#974245008b3cbbd646bd81707af147aea3acca43"
+  integrity sha512-bJILBtn5a11SmtR2j/3mBOjX4K3weC6cq+NNZ7hG22wCAqpc3qtj/iN7dSe9HDiS46lgp1nHsQgeYrea/RUe+g==
+
 babel-preset-expo@~9.3.2:
   version "9.3.2"
   resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-9.3.2.tgz#0fe408d8d816a3e10fde2e1d1f7aa51b112baf3a"
@@ -2901,11 +2906,6 @@ dir-glob@^3.0.1:
   integrity sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==
   dependencies:
     path-type "^4.0.0"
-
-dotenv@^16.0.3:
-  version "16.0.3"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
-  integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -5403,13 +5403,6 @@ react-native-codegen@^0.71.5:
     flow-parser "^0.185.0"
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
-
-react-native-dotenv@^3.4.8:
-  version "3.4.8"
-  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-3.4.8.tgz#42284070a9994076cd700805c2dd28051c9e1432"
-  integrity sha512-fg9F8X/cG1kDTwRLgLz3t+AMbsULoFHbUVltdQarmrJ3kNllD1Zq7ZgY85bp8BnPwk0DnYQzKbooiLsUoKd10w==
-  dependencies:
-    dotenv "^16.0.3"
 
 react-native-gradle-plugin@^0.71.17:
   version "0.71.17"
