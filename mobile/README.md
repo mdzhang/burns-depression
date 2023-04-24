@@ -24,5 +24,6 @@ The mobile app is built using [React Native](https://reactnative.dev/) and [Expo
 1. Install EAS && init to project
   ```sh
   $ npm install --global eas-cli
-  $ eas init --id <uuid>
+  # see supabase secrets for value
+  $ eas init --id $EAS_PROJECT_ID
   ```
