@@ -13,13 +13,21 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.amisad"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.amisad"
+    },
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "012a3fa5-73c1-42b0-8c91-ab90e915051d"
       }
     },
-    "web": {}
+    "owner": "mdzhang"
   }
 }

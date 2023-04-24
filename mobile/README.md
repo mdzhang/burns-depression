@@ -14,3 +14,11 @@ The mobile app is built using [React Native](https://reactnative.dev/) and [Expo
 - Start Expo on your host with `yarn start`
 - Use the Expo Go app to scan the resulting QR code
   - _NB_: ensure all ad blockers, private DNS, etc. are disabled on your phone first!
+
+## Releasing
+
+1. Install EAS && init to project
+  ```sh
+  $ npm install --global eas-cli
+  $ eas init --id <uuid>
+  ```
