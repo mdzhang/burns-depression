@@ -10,7 +10,7 @@ The mobile app is built using [React Native](https://reactnative.dev/) and [Expo
   ```sh
   $ cloudflared tunnel --url http://localhost:80
   ```
-- Set the environment variable `BASE_URL` to be the tunnel's domain e.g. `'https://se-likes-folders-resort.trycloudflare.com'`
+- Set the environment variable `REACT_APP_BASE_URL` to be the tunnel's domain e.g. `'se-likes-folders-resort.trycloudflare.com'`
 - Start Expo on your host with `yarn start`
 - Use the Expo Go app to scan the resulting QR code
   - _NB_: ensure all ad blockers, private DNS, etc. are disabled on your phone first!
