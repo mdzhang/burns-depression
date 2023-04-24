@@ -9,7 +9,7 @@ export default function App() {
   return (
     <WebView
       source={{ uri }}
-      style={{ marginTop: 48 }}
+      style={{ marginTop: 24 }}
     />
   );
 }
