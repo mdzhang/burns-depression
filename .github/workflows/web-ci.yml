@@ -1,0 +1,22 @@
+name: [ci] web
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  jest:
+    uses: ./.github/workflows/yarn-reusable.yml
+    with:
+      dir: frontend
+      cmd: test
+
+  lint:
+    uses: ./.github/workflows/yarn-reusable.yml
+    with:
+      dir: frontend
+      cmd: lint
