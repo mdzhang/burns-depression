@@ -49,3 +49,5 @@ jobs:
 
       - name: 🚀 Build app
         run: eas build --non-interactive --platform=android
+        env:
+          REACT_APP_BASE_URL: amisad.com
