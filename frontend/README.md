@@ -2,7 +2,7 @@
 
 ## Development
 
-Install [`node](https://nodejs.org/en/) v18+ e.g. using [`anyenv`](https://github.com/anyenv/anyenv) & [`nodenv`](https://github.com/nodenv/nodenv)
+Install [`node`](https://nodejs.org/en/) v18+ e.g. using [`anyenv`](https://github.com/anyenv/anyenv) & [`nodenv`](https://github.com/nodenv/nodenv)
 
 ```sh
 # ensure you're in the frontend/ directory and have recently `git pull`'d
