@@ -41,13 +41,13 @@ To hit: `make keepalive`
 ## Development
 
 1. Setup Supabase CLI
-  ```sh
-  $ npm install
-  $ npx supabase login
-  $ npx supabase init
-  $ npx supabase link --project-ref ndiwftxorygotvnblwbg
-  ```
+    ```sh
+    $ npm install
+    $ npx supabase login
+    $ npx supabase init
+    $ npx supabase link --project-ref ndiwftxorygotvnblwbg
+    ```
 1. Install `postgresql`
-  ```sh
-  $ brew install deno postgresql@15
-  ```
+    ```sh
+    $ brew install deno postgresql@15
+    ```

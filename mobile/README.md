@@ -1,6 +1,6 @@
 # Mobile
 
-The mobile app is built using [React Native](https://reactnative.dev/) and [Expo](https://expo.dev/). It currently simply renders a `WebView` of the same app accessed via a mobile browser.
+The mobile app is built using [React Native](https://reactnative.dev/) and [Expo](https://expo.dev/). It currently only renders a `WebView` of the same app accessed via a mobile browser.
 
 ## Development
 
@@ -16,14 +16,19 @@ The mobile app is built using [React Native](https://reactnative.dev/) and [Expo
   # replace xxx with your tunnel's top level domain
   ```
 - Start Expo on your host with `yarn start`
-- Use the Expo Go app to scan the resulting QR code
+- Use the Expo Go app to scan the resulting QR code && navigate to the app
   - _NB_: ensure all ad blockers, private DNS, etc. are disabled on your phone first!
 
 ## Releasing
 
-1. Install EAS && init to project
-  ```sh
-  $ npm install --global eas-cli
-  # see supabase secrets for value
-  $ eas init --id $EAS_PROJECT_ID
-  ```
+Releases are managed via GitHub Actions && Expo automatically.
+
+To manually release:
+
+1. Install EAS and initialize the project
+    ```sh
+    $ npm install --global eas-cli
+    # see Supabase secrets for value of EAS_PROJECT_ID
+    $ eas init --id $EAS_PROJECT_ID
+    $ eas build --non-interactive --platform=android
+    ```
