@@ -12,3 +12,40 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#outer-space {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.shooting-star {
+  background-color: '#32cbff';
+  animation: shower;
+  animation-duration: 9s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  visibility: hidden;
+}
+
+@keyframes shower {
+  from {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    transform: translateY(100vh);
+  }
+}

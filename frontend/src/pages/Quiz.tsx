@@ -12,6 +12,7 @@ import './Quiz.css';
 import { TOPBAR_HEIGHT } from '@burns-depression/lib/constants';
 import useSubmitScore from '@burns-depression/hooks/useSubmitScore';
 import questions from '@burns-depression/data/questions.json';
+import createBoxes from '@burns-depression/lib/animations/stars';
 
 const CardContainerStyle: CSSProperties = {
   flexDirection: 'column',
@@ -72,8 +73,13 @@ function QuizCongrats() {
 }
 
 function QuizLanding() {
+  useEffect(() => {
+    createBoxes();
+  });
+
   return (
     <main className="main">
+      <div id="outer-space" />
       <h1 className="text-3xl font-bold">
         Take The Burns Depression Quiz
       </h1>
