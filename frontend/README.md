@@ -45,3 +45,20 @@ $ serve -s build
 
 - [Google Search Console](https://search.google.com/search-console/users?resource_id=sc-domain:amisad.com)
 - [Google Analytics](https://analytics.google.com/analytics/web/?authuser=0#/p324823976/reports/intelligenthome)
+
+## Deploying
+
+The site will be automatically deployed on merge to `main`. To force redeploy:
+
+```sh
+# install cli
+$ yarn global add vercel
+# login
+$ vercel login
+# build
+$ vercel build
+# deploy to preview
+$ vercel deploy --prebuilt
+# deploy to prod
+$ vercel --prod
+```
