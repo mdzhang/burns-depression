@@ -1,0 +1,34 @@
+{
+  "name": "frontend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve-bundled": "vite preview",
+    "lint": "npm run lint:eslint",
+    "lint:eslint": "eslint 'src/**/*.ts' 'app.ts'",
+    "format": "prettier \"**/*.{cjs,html,js,json,md,ts}\" --ignore-path ./.eslintignore --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdzhang/burns-depression.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mdzhang/burns-depression/issues"
+  },
+  "homepage": "https://github.com/mdzhang/burns-depression#readme",
+  "dependencies": {
+    "lit": "^3.0.0",
+    "@shoelace-style/shoelace": "^2.11.2"
+  },
+  "devDependencies": {
+    "vite": "^2.4.4",
+    "eslint": "^8.15.0",
+    "prettier": "^2.6.2",
+    "typescript": "~5.2.0"
+  }
+}
