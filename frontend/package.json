@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "tsc": "tsc",
     "dev": "vite",
     "build": "vite build",
     "serve-bundled": "vite preview",
@@ -22,13 +23,17 @@
   },
   "homepage": "https://github.com/mdzhang/burns-depression#readme",
   "dependencies": {
-    "lit": "^3.0.0",
-    "@shoelace-style/shoelace": "^2.11.2"
+    "@shoelace-style/shoelace": "^2.11.2",
+    "lit": "^3.0.0"
   },
   "devDependencies": {
-    "vite": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
     "eslint": "^8.15.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-no-only-tests": "^3.1.0",
     "prettier": "^2.6.2",
-    "typescript": "~5.2.0"
+    "ts-lit-plugin": "^2.0.1",
+    "typescript": "~5.2.0",
+    "vite": "^2.4.4"
   }
 }
